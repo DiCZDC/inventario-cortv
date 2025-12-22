@@ -21,7 +21,7 @@ Route::get('/reportes', function () {
 })->name('reportes');
 
 Route::get('/consultar-tablas', function () {
-    return view('consultar_tablas');
+    return view('table.index');
 })->name('consultar_tablas');
 
 Route::get('/nuevo-producto', function () {
