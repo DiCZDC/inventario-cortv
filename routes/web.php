@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\{
+    ProfileController,
+    productController
+};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,9 +23,7 @@ Route::get('/reportes', function () {
     return view('reportes');
 })->name('reportes');
 
-Route::get('/consultar-tablas', function () {
-    return view('table.index');
-})->name('consultar_tablas');
+Route::get('/consultar-tablas', [productController::class, 'index'])->name('consultar_tablas');
 
 Route::get('/nuevo-producto', function () {
     return view('nuevo_producto');

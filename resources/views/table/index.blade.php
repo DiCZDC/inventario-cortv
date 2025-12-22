@@ -14,13 +14,11 @@
                     <button class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">Entradas</button>
                     <button class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">Productos</button>
                 </div>
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    
+            <!--Tablas-->
+                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                     @include('table.partials.products')
-                    {{-- @include('profile.partials.update-profile-information-form') --}}
+                    
                 </div>
-            </div>
 
         </div>
     </div>
