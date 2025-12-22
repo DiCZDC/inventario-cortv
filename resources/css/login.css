@@ -14,19 +14,6 @@ body{
 }
 
 /* Fallback pseudo-element to ensure background shows even if other rules interfere */
-body::before{
-	content: '';
-	position: fixed;
-	inset: 0;
-	background-image: url('../images/cortv.png');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
-	background-attachment: fixed;
-	z-index: -1;
-	pointer-events: none;
-}
-
 
 .login-container {
 	width: 100vw;
