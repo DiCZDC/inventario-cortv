@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Producto;
+use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ProductController extends Controller
+class AreaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $productos = Producto::paginate(20);
-        return view('table.index', compact('productos'));
+        $areas = Area::paginate(20);
+        return view('table.index', compact('areas'));
     }
 
     /**

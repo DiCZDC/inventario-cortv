@@ -15,9 +15,9 @@ class Producto extends Model
     protected $table = 'productos';
     protected $primaryKey = 'id_producto';
 
-    public function claves()
+    public function clave()
     {
-        return $this->belongsToMany(Clave::class);
+        return $this->hasOne(Clave::class, 'id_producto', 'id_producto');
     }
 
     public function registro()

@@ -17,11 +17,11 @@ class Registro extends Model
 
     public function persona()
     {
-        return $this->belongsToMany(Persona::class);
+        return $this->belongsTo(Persona::class, 'persona_id', 'id_persona');
     }
 
     public function producto()
     {
-        return $this->belongsToMany(Producto::class);
+        return $this->belongsTo(Producto::class, 'producto_id', 'id_producto');
     }
 }

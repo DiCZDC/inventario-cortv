@@ -6,7 +6,6 @@
                 <tr>
                     <th class="border border-gray-300 px-4 py-2">ID</th>
                     <th class="border border-gray-300 px-4 py-2">Producto</th>
-                    <th class="border border-gray-300 px-4 py-2">Descripción</th>
                     <th class="border border-gray-300 px-4 py-2">Cantidad</th>
                     <th class="border border-gray-300 px-4 py-2">Tipo Unidad</th>
                     <th class="border border-gray-300 px-4 py-2">Opciones</th>
@@ -17,7 +16,6 @@
                     <tr class="hover:bg-gray-100">
                         <td class="border border-gray-300 px-4 py-2">{{ $item->id_producto }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $item->nombre_producto }}</td>
-                        <td class="border border-gray-300 px-4 py-2">{{ $item->descripcion_producto }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $item->cantidad_producto }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $item->unidad_producto }}</td>
                         <td class="border border-gray-300 px-4 py-2">

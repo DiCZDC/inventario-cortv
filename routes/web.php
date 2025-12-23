@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\{
     ProfileController,
-    productController
+    ProductController,
+    AreaController
 };
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,9 @@ Route::get('/reportes', function () {
     return view('reportes');
 })->name('reportes');
 
-Route::get('/consultar-tablas', [productController::class, 'index'])->name('consultar_tablas');
+
+Route::get('/consultar-tablas', [ProductController::class, 'index'])->name('consultar_tablas');
+// Route::get('/consultar-tablas', [AreaController::class, 'index'])->name('consultar_tablas');
 
 Route::get('/nuevo-producto', function () {
     return view('nuevo_producto');
