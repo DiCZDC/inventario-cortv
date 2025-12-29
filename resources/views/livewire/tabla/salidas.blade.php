@@ -1,8 +1,6 @@
 <div>
-
     <section class="mt-10">
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-            <!-- Start coding here -->
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between d p-4">
                     <div class="flex">
@@ -51,7 +49,7 @@
                                 @include('livewire.includes.table-sort-th', ['name' => 'created_at', 'displayName' => 'Fecha', 'sortDir' => $sortDir])
                                 @include('livewire.includes.table-sort-th', ['name' => 'solicitante', 'displayName' => 'Solicitante', 'sortDir' => $sortDir])
                                 @include('livewire.includes.table-sort-th', ['name' => 'NoFiltro', 'displayName' => 'Encargado', 'sortDir' => $sortDir])
-                                @include('livewire.includes.table-sort-th', ['name' => 'cantidad_entrada', 'displayName' => 'Cantidad', 'sortDir' => $sortDir])
+                                @include('livewire.includes.table-sort-th', ['name' => 'cantidad_salida', 'displayName' => 'Cantidad', 'sortDir' => $sortDir])
                                 
                             </tr>
                         </thead>
@@ -88,7 +86,7 @@
                             </select>
                         </div>
                     </div>
-                    {{ $salidas->links() }}
+                    {{ $salidas->links('pagination::tailwind') }}
                 </div>
             </div>
         </div>

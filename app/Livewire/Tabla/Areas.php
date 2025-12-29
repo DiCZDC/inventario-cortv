@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Tabla;
 
 use Livewire\Component;
 use App\Models\Area;
 use Livewire\WithPagination;    
 
-class AreaTabla extends Component
+class Areas extends Component
 {
-    use WithPagination;
+use WithPagination;
 
-    #[URL(history:true)]
+    #[Url(history:true)]
     public $search = '';
-    #[URL(history:true)]
+    #[Url(history:true)]
     public $areaFilter = '';
     
     
-    #[URL(history:true)]
+    #[Url(history:true)]
     public $sortBy = 'id_area';
     
-    #[URL(history:true)]
+    #[Url(history:true)]
     public $sortDir = 'ASC';
     
-    #[URL(history:true)]
+    #[Url(history:true)]
     public $perPage = 10;
 
     
@@ -50,7 +50,7 @@ class AreaTabla extends Component
 
     public function render()
     {
-        return view('livewire.area-tabla',
+        return view('livewire.tabla.areas',
         [
             'areas' => Area::search($this->search)
             ->orderBy($this->sortBy, $this->sortDir)
@@ -59,3 +59,5 @@ class AreaTabla extends Component
         );
     }
 }
+
+

@@ -1,29 +1,28 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Tabla;
 
 use Livewire\Component;
-use App\Models\Entrada;
+use App\Models\Salida;
 use Livewire\WithPagination;    
 
-
-class EntradasTabla extends Component
+class Salidas extends Component
 {
     use WithPagination;
 
-    #[URL(history:true)]
+    #[Url(history:true)]
     public $search = '';
-    #[URL(history:true)]
+    #[Url(history:true)]
     public $areaFilter = '';
     
     
-    #[URL(history:true)]
-    public $sortBy = 'id_entrada';
+    #[Url(history:true)]
+    public $sortBy = 'id_salida';
     
-    #[URL(history:true)]
+    #[Url(history:true)]
     public $sortDir = 'ASC';
     
-    #[URL(history:true)]
+    #[Url(history:true)]
     public $perPage = 10;
 
     public function setSortBy($sortBy){
@@ -40,9 +39,9 @@ class EntradasTabla extends Component
 
     public function render()
     {
-        return view('livewire.entradas-tabla',
+        return view('livewire.tabla.salidas',
         [
-            'entradas' =>Entrada::
+            'salidas' =>Salida::
             search($this->search)-> 
             when($this->areaFilter!=='', function ($query) {
                 $query->whereHas('registro.producto.clave', function ($query) {

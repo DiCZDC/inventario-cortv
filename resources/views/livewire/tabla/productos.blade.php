@@ -2,7 +2,6 @@
 
     <section class="mt-10">
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-            <!-- Start coding here -->
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                 <div class="flex items-center justify-between d p-4">
                     <div class="flex">
@@ -46,25 +45,40 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
-                                @include('livewire.includes.table-sort-th', ['name' => 'id_entrada', 'displayName' => 'ID', 'sortDir' => $sortDir])
-                                @include('livewire.includes.table-sort-th', ['name' => 'NoFiltro', 'displayName' => 'Nombre Producto', 'sortDir' => $sortDir])
-                                @include('livewire.includes.table-sort-th', ['name' => 'created_at', 'displayName' => 'Fecha', 'sortDir' => $sortDir])
-                                @include('livewire.includes.table-sort-th', ['name' => 'NoFiltro', 'displayName' => 'Encargado', 'sortDir' => $sortDir])
-                                @include('livewire.includes.table-sort-th', ['name' => 'cantidad_entrada', 'displayName' => 'Cantidad', 'sortDir' => $sortDir])
-                                
+                            @include('livewire.includes.table-sort-th', ['name' => 'id_producto', 'displayName' => 'ID', 'sortDir' => $sortDir])
+                                @include('livewire.includes.table-sort-th', ['name' => 'nombre_producto', 'displayName' => 'Producto', 'sortDir' => $sortDir])
+                                @include('livewire.includes.table-sort-th',['name' => 'NoFiltro', 'displayName' => 'Área', 'sortDir' => $sortDir])
+                                @include('livewire.includes.table-sort-th', ['name' => 'NoFiltro', 'displayName' => 'Clave', 'sortDir' => $sortDir])
+                                @include('livewire.includes.table-sort-th', ['name' => 'cantidad_producto', 'displayName' => 'Cantidad', 'sortDir' => $sortDir])
+                                @include('livewire.includes.table-sort-th', ['name' => 'unidad_producto', 'displayName' => 'Tipo Unidad', 'sortDir' => $sortDir])
+                                <th scope="col" class="px-4 py-3">
+                                    <span class="sr-only">
+                                        Acciones
+                                    </span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($entradas as $entrada)
-                                <tr class="border-b dark:border-gray-700" wire:key={{ $entrada->id_entrada }}>
+                            @foreach ($productos as $producto)
+                                <tr wire:key={{ $producto->id_producto }} class="border-b dark:border-gray-700">
                                     <th scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $entrada->id_entrada }}</th>
-                                        <td class="px-4 py-3">{{ $entrada->registro->producto->nombre_producto }}</td>
-                                        <td class="px-4 py-3">{{ $entrada->registro->fecha_registro}} </td>
-                                        <td class="px-4 py-3">{{ $entrada->registro->persona->nombre_persona }}</td>
-                                        <td class="px-4 py-3">{{ $entrada->cantidad_entrada }}</td>
-
+                                        {{ $producto->id_producto }}</th>
+                                    <td class="px-4 py-3">{{ $producto->nombre_producto }}</td>
+                                    <td class="px-4 py-3">{{ $producto->clave->area->nombre_area }}</td>
+                                    <td class="px-4 py-3">{{ $producto->clave->valor_clave }}</td>
+                                    <td class="px-4 py-3 {{ $producto->cantidad_producto > 0 ? 'text-green-500' : 'text-red-500' }}">
+                                        {{ $producto->cantidad_producto }}</td>
+                                    <td class="px-4 py-3">{{ $producto->unidad_producto }} </td>
+                                    <td class="px-4 py-3 flex items-center justify-end">
+                                        <button class="ml-2 px-3 py-1 bg-blue-500 text-white rounded m-2">
+                                            Editar
+                                        </button>  
+                                        <button onclick="confirm('¿Estas seguro de que quieres eliminar {{$producto->nombre_producto}}?') || event.stopImmediatePropagation()" wire:click="eliminar({{ $producto->id_producto }})" 
+                                            class="px-3 py-1 bg-red-500 text-white rounded m-2">
+                                            Eliminar
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
     
@@ -87,7 +101,7 @@
                             </select>
                         </div>
                     </div>
-                    {{ $entradas->links() }}
+                    {{ $productos->links() }}
                 </div>
             </div>
         </div>
