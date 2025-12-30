@@ -1,4 +1,4 @@
-<section>
+<section class= "probando">
      @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/css/header-dashboard.css', 'resources/js/app.js'])
         @else
@@ -7,9 +7,9 @@
             </style>
         @endif`
     <div class="header2">
-    <div class="informacion">
-        <div class="saludo">
-            <span>¡Hola Daniel Garcia!</span>
+        <div class="informacion">
+            <div class="saludo">
+                <span>¡Hola Daniel Garcia!</span>
         </div>
         
         <div class="mensaje">

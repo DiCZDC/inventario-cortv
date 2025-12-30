@@ -1,5 +1,10 @@
 <x-app-layout>
-    <div>
-        @include('partials.header-dashboard')
+    @include('partials.header-dashboard')
+    <div class="header">
     </div>
+
+
+
 </x-app-layout>
+
+
