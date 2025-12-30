@@ -8,10 +8,10 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href={{public_path("https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap") }}rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+            @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
 <body>
     <div class="w-full py-6 px-4 sm:px-6 lg:px-8">
@@ -29,7 +29,7 @@
         </div>
         <!-- La tabla contiene Numeracion, Codigo de producto, nombre del producto (llamado descripcion),
             Existencias iniciales, Cantidad de salidas, Cantidad de entradas,  Existencias finales-->
-        <!--Tabla de productos-->
-        @livewire('tabla.reporte')
-    </div>
+            <!--Tabla de productos-->
+                @livewire('tabla.reporte')
+        </div>
 </body>

@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     RegistroController,
     EntradaController,
     SalidaController,
+    pdfController
 };
 use App\Livewire\{
     Counter,
@@ -20,9 +21,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/pdfs', function () {
-    return view('pdfs.index');
-})->middleware(['auth', 'verified'])->name('pdfs');
+
+Route::get('/generate-report', [pdfController::class, 'generateReport'])->name('generate.pdf');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
