@@ -21,6 +21,9 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/pdfs', function () {
+    return view('pdfs.report');
+})->name('pdfs.report');
 
 Route::get('/generate-report', [pdfController::class, 'generateReport'])->name('generate.pdf');
 

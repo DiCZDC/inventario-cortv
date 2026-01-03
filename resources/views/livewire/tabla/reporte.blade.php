@@ -47,15 +47,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($productos as $producto)
+                        @foreach ($this->productos as $producto)
                             <tr class="border-b dark:border-gray-700">
-                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">{{ $pos }}</th>
+                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center w-auto">{{ $pos }}</th>
                                 <td class="px-4 py-3 text-center">{{ $producto->clave->valor_clave }}</td>
-                                <td class="px-4 py-3 break-words max-w-sm">{{ $producto->nombre_producto }}</td>
+                                <td class="px-4 py-3 break-word max-w-2">{{ $producto->nombre_producto }}</td>
                                 <td class="px-4 py-3 text-center">{{ $this->totalInicial($producto) }}</td>
-                                <td class="px-4 py-3 text-center {{ $this->totalEntradas($producto) > 0 ? 'text-green-500':'text-gray-500'}}">{{ $this->totalEntradas($producto)}} </td>
-                            
-                                <td class="px-4 py-3 text-center {{ $this->totalSalidas($producto) > 0 ? 'text-red-500':'text-gray-500'}}">{{ $this->totalSalidas($producto)}} </td>
+                                <td class="px-4 py-3 text-center {{ $this->totalEntradas > 0 ? 'text-green-500':'text-gray-500'}}">{{ $this->totalEntradas}} </td>
+                                <td class="px-4 py-3 text-center {{ $this->totalSalidas > 0 ? 'text-red-500':'text-gray-500'}}">{{ $this->totalSalidas}} </td>
                                 <td class="px-4 py-3 text-center {{ $this->totalFinal($producto) > 0 ? 'text-green-500' : ($this->totalFinal($producto) == 0 ? 'text-gray-500' : 'text-red-500') }}">
                                     {{ $this->totalFinal($producto) }}
                                 </td>

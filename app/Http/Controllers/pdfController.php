@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
-
+use Spatie\LaravelPdf\Facades\Pdf;
 class pdfController extends Controller
 {
     /**
@@ -16,9 +15,10 @@ class pdfController extends Controller
     }
     public function generateReport()
     {
-        $pdf = PDF::loadView('pdfs.report');
-        return $pdf->stream();
-    
+        set_time_limit(120);
+        return Pdf::view('pdfs.report', [])
+                    ->name('invoice' . date('Y-m-d') . '.pdf')
+                    ->download();
     }
     /**
      * Show the form for creating a new resource.
