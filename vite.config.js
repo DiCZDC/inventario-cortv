@@ -7,7 +7,10 @@ export default defineConfig({
             input: ['resources/css/app.css', 
                     'resources/css/login.css',
                     'resources/css/header-dashboard.css',
-                    'resources/js/app.js'],
+                    'resources/css/carrusel.css',
+                    'resources/js/app.js',
+                    'resources/js/carrusel.js'
+                ],
             refresh: true,
         }),
     ],
