@@ -1,5 +1,8 @@
 {{-- cards dashboard, layout por cada una --}}
-<div class="w-[32%] h-full rounded-[10px] shadow-lg flex flex-col items-center p-5 gap-[5px] bg-[#AE2B2F]">
+<div class="bg-[#AE2B2F] flex flex-col shadow-lg rounded-[10px] h-[220px] items-center justify-center
+              w-[70%] p-[15px] self-center gap-[5px] 
+              xs:w-[32%] xs:p-5
+              md:gap-3">
     
     <div>
         <div class="svg">

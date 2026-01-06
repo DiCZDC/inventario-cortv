@@ -10,16 +10,23 @@
     {{-- parte semantica, pero corresponde al contenido principal de la pagina --}}
     <section class= "contenido">
         {{-- div que contiene el layout del main del dashboard, tabla, carrsuel y cards de demandas    --}}
-        <div class="mt-3 box-border w-full flex flex-row justify-around gap-8 p-8">
+        <div class="mt-[30px] flex-col px-[10px] py-0 gap-[30px] 
+        md:mt-10 md:px-[30px] md:gap-10
+        lg:mt-1 box-border w-full flex lg:flex-row lg:justify-around lg:gap-8 lg:p-8
+        ">
             {{-- tabla de los ultimos cambios en el inventario, parte izquierda --}}
             <livewire:dashboard.table />
 
             {{-- parte derecha del dashboard, carrsuel y cards --}}
             {{-- div con el laayout de la seccion derecha--}}
-            <div class="w-[48%] flex flex-col">
+            <div class=
+            "w-[100%] flex flex-col
+            lg:w-[48%]">
                 
                 {{-- div del layout de los cards de demanda y menos demandado --}}
-                <div class="flex flex-row gap-10 mb-2.5 p-[15px] box-border justify-evenly">
+                <div class="flex gap-5 p-3 flex-col box-border
+                xs:flex-row xs:gap-9 xs:mb-2.5 xs:p-[15px]  xs:justify-evenly
+                md:gap-9 md:p-[15px] ">
                     <livewire:dashboard.dialog-dashboard tipo="demanda" />
                     <livewire:dashboard.dialog-dashboard tipo="menos" />
                 </div>

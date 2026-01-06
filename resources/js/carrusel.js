@@ -11,9 +11,9 @@ const swiper = new Swiper('.slider-wrapper', { // Asegúrate que este selector c
   grabCursor: true,
   spaceBetween: 30, // Reducir un poco el espacio suele ayudar visualmente
   slidesPerView: 1, // Esto obliga a ver solo 1
-  // autoplay: {
-  //   delay: 2000,   
-  // },
+   autoplay: {
+     delay: 2000,   
+   },
   effect: 'slide',
 
   // Asegura que el slide esté centrado
