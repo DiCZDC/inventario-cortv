@@ -1,5 +1,5 @@
 <div class="
-        w-full flex flex-col {{ $estilos }}
+        w-full flex flex-col {{ $estilos }} 
         xs:w-[87%] xs:self-center
         md:w-[81%] md:self-center
         lg:w-[43%]
@@ -7,7 +7,7 @@
     {{-- div de la tabla del dashboard --}}   
         <!-- encabezado-tabla -->
         <div class="
-        text-[#AE2B2F] text-center font-times text-2xl font-bold leading-[120%] tracking-[-0.76px] mt-5 mb-5
+        text-cortvRojoBasico text-center font-times text-2xl font-bold leading-[120%] tracking-[-0.76px] mt-5 mb-5
         xs:text-[27px]
         md:text-3xl           
         lg:text-4xl
@@ -23,9 +23,9 @@
         md:w-full md:px-4 md:mb-4 
         lg:w-full lg:p-5">
             {{-- cards de la tabla, se mandan llamar desde el componente livewire solo se llaman 3, puede ampliarse --}}
-            <livewire:dashboard.card-table :estilos="$cardEstilos" />
-            <livewire:dashboard.card-table :estilos="$cardEstilos" />
-            <livewire:dashboard.card-table :estilos="$cardEstilos" />
+            <livewire:dashboard.card-table :estilos="$cardEstilos" :mostrarBotonEditar="$mostrarBotonEditar" />
+            <livewire:dashboard.card-table :estilos="$cardEstilos" :mostrarBotonEditar="$mostrarBotonEditar" />
+            <livewire:dashboard.card-table :estilos="$cardEstilos" :mostrarBotonEditar="$mostrarBotonEditar" />
 
         </div>    
 
