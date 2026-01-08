@@ -17,6 +17,7 @@ class CardTable extends Component
         
     ];
 
+    //selecciona el icono segun el area
     public function selectIcon($area){
         switch ($area) {
             case 'PAP':
