@@ -38,8 +38,8 @@
                             Descripción del producto </span>
                     </label>
                     
-                    <input type="text" id="descripcion" name="descripcion" wire:model.blur="descripcion_producto"
-                        class="border-cortvBorde border-1 rounded-md p-2 h-[60px] w-full mt-1">
+                    <textarea id="descripcion" name="descripcion" wire:model.blur="descripcion_producto" rows="3"
+                        class="border-cortvBorde border-1 rounded-md p-2 w-full mt-1"></textarea>
                     
                         {{-- validacion del formulario --}}
 
@@ -84,6 +84,7 @@
 
                 <select id="area" name="area" wire:model.blur="area_producto"
                     class="border-cortvBorde border-1 rounded-md p-2 h-[40px] w-full mt-2 text-[16px]">
+                    <option value="">Seleccione un área</option>
                     <option value="informatica"> Informática </option>
                     <option value="electronica"> Electrónica </option>
                     <option value="mecanica"> Mecánica </option>

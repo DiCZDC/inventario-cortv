@@ -53,11 +53,11 @@ Route::get('/nuevo-producto', function () {
 })->name('nuevo_producto');
 
 Route::get('/entradas', function () {
-    return view('entradas');
+    return view('entradas.index');
 })->name('entradas');
 
 Route::get('/salidas', function () {
-    return view('salidas');
+    return view('salidas.index');
 })->name('salidas');
 
 require __DIR__.'/auth.php';

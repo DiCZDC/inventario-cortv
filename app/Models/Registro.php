@@ -25,15 +25,7 @@ class Registro extends Model
     public function producto()
     {
         return $this->belongsTo(Producto::class, 'producto_id', 'id_producto');
-    }
-    public function entrada()
-    {
-        return $this->hasOne(Entrada::class, 'id_entrada', 'id_registro');
-    }
-    public function salida()
-    {
-        return $this->hasOne(Salida::class, 'id_salida', 'id_registro');
-    }
+    }    
     public function scopeSearch($query, $value)
     {
         $query->where('id_registro', 'like', '%' . $value . '%')

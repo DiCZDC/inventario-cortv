@@ -27,8 +27,7 @@ class Formulario extends Component
     public $unidad_producto = '';
     
     #[Validate('required', message:'Seleccione un área para el producto')]
-    #[Validate]
-    public $area_producto = [];
+    public $area_producto = '';
     
     public function save()
     {
