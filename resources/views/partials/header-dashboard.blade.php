@@ -24,7 +24,7 @@
                 <span>Genera tu reporte aqui</span>
             </div>
         </a>
-        <p class="text-cortvHueso text-center" style="font-family: 'Times New Roman', Times, serif; font-size: 14px; margin-top: 10px;">
+        <p class="text-cortvHueso text-center" style="font-family: 'Times New Roman', Times, serif">
             Periodo: {{ date('d/m/Y', strtotime('first day of last month')) }} - {{ date('d/m/Y', strtotime('last day of last month')) }}
         </p>
     </div>
