@@ -19,10 +19,14 @@
     </div>
     
     <div class="principal">
-        <div class="btn">
-            <span>Genera tu reporte aqui</span>
-        </div>
-             
+        <a href="{{ route('generate.pdf', ['fechaInicio' => date('Y-m-01', strtotime('last month')), 'fechaFin' => date('Y-m-t', strtotime('last month'))]) }}">
+            <div class="btn">
+                <span>Genera tu reporte aqui</span>
             </div>
+        </a>
+        <p class="text-cortvHueso text-center" style="font-family: 'Times New Roman', Times, serif; font-size: 14px; margin-top: 10px;">
+            Periodo: {{ date('d/m/Y', strtotime('first day of last month')) }} - {{ date('d/m/Y', strtotime('last day of last month')) }}
+        </p>
+    </div>
 </div>
 </section>
