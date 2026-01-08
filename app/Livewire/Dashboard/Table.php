@@ -18,7 +18,7 @@ class Table extends Component
     //obtiene los ultimos 3 registros de entradas y salidas
     #[Computed()]
     public function Registros(){
-        return Registro:: orderBy('fecha_registro','DESC')->take(3);
+        return Registro::orderBy('fecha_registro','DESC')->take(3)->get();
     }
 
     public function render()

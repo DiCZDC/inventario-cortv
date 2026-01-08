@@ -23,11 +23,13 @@
         md:w-full md:px-4 md:mb-4 
         lg:w-full lg:p-5">
             {{-- cards de la tabla, se mandan llamar desde el componente livewire solo se llaman 3, puede ampliarse --}}
-            @livewire('dashboard.card-table', ['estilos' => $cardEstilos, 'mostrarBotonEditar' => $mostrarBotonEditar,'registro' => $this->Registros->get()[0]])
-            @livewire('dashboard.card-table', ['estilos' => $cardEstilos, 'mostrarBotonEditar' => $mostrarBotonEditar,'registro' => $this->Registros->get()[1]])
-            @livewire('dashboard.card-table', ['estilos' => $cardEstilos, 'mostrarBotonEditar' => $mostrarBotonEditar,'registro' => $this->Registros->get()[2]])
-
-            
+            @forelse($this->Registros as $registro)
+                @livewire('dashboard.card-table', ['estilos' => $cardEstilos, 'mostrarBotonEditar' => $mostrarBotonEditar, 'registro' => $registro], key($registro->id_registro))
+            @empty
+                <div class="text-center text-gray-500 py-4">
+                    No hay registros disponibles
+                </div>
+            @endforelse
 
         </div>    
 
