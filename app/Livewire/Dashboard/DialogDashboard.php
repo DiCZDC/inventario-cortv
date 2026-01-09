@@ -8,25 +8,11 @@ class DialogDashboard extends Component
 {   
     public $tipo;
     public $producto;
-    public $cantidad;
-    public $unidad;
+    
 
-    public function mount($tipo)
+    public function mount($tipo, $producto)
     {
-        $this->tipo = $tipo;
-        
-        // Lógica para obtener el producto según el tipo
-        if ($tipo === 'demanda') {
-            // Consulta para producto más demandado
-            $this->producto = 'Hojas Blancas';
-            $this->cantidad = 2;
-            $this->unidad = 'paquetes';
-        } else {
-            // Consulta para producto menos demandado
-            $this->producto = 'Grapas';
-            $this->cantidad = 15;
-            $this->unidad = 'cajas';
-        }
+        $this->producto = $producto;
     }
 
     public function render()

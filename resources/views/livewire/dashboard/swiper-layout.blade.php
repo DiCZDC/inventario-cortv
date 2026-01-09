@@ -3,10 +3,9 @@
 
     <!-- slides para el carrusel -->
     <div class="card-list swiper-wrapper">
-        <livewire:dashboard.slide-swiper />
-        <livewire:dashboard.slide-swiper />
-        <livewire:dashboard.slide-swiper /> 
-        <livewire:dashboard.slide-swiper /> 
+        @foreach ($slides as $slide)
+            <livewire:dashboard.slide-swiper :cantidad="$slide['cantidad_actual']" :producto="$slide['producto']->nombre_producto" :unidad="$slide['producto']->unidad_producto" />
+        @endforeach
     </div>
 
     <!-- controles del carrusel -->
