@@ -13,6 +13,6 @@ class registroSeeder extends Seeder
      */
     public function run(): void
     {
-        Registro::factory()->count(10000)->create();
+        Registro::factory()->count(1000)->create();
     }
 }
