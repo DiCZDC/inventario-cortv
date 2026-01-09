@@ -21,11 +21,11 @@
             @endif
         </div>
     </div>
-
+    
     <div class="flex flex-col items-center gap-[5px]">
         <h1 class="text-white text-center text-[24px] font-bold leading-[120%] tracking-[-0.76px]"
             style="font-family: 'Times New Roman'">
-            {{ $producto }}
+            {{ $producto['producto']->nombre_producto}}
         </h1>
         <h2 class="text-white text-center text-[20px] font-semibold leading-[120%] tracking-[-0.5px]"
             style="font-family: 'Times New Roman'">
@@ -35,8 +35,8 @@
         
         <div class="flex flex-row justify-center gap-[5px] text-white text-center text-[18px] font-normal leading-[120%] tracking-[-0.36px]"
             style="font-family: 'Times New Roman'">
-            <span>{{ $cantidad }}</span>
-            <span>{{ $unidad }}</span>
+            <span>{{ $producto['cantidad_actual'] }}</span>
+            <span>{{ $producto['producto']->unidad_producto}}</span>
             <span>restantes</span>
         </div>
     </div>
