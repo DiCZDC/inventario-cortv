@@ -14,7 +14,9 @@ class DialogDashboard extends Component
     {
         $this->producto = $producto;
     }
-
+    public function placeholder(){
+        return view('livewire.placeholders.dashboard.dialog-dashboard');
+    }
     public function render()
     {
         return view('livewire..dashboard.dialog-dashboard');

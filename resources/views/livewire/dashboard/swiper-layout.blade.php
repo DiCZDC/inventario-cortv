@@ -9,11 +9,11 @@
     </div>
 
     <!-- controles del carrusel -->
-    <!-- swiper controls -->
-    <div class="flex justify-center items-center gap-4 mt-5 w-full">
-        <div class="swiper-slide-button swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-slide-button swiper-button-next"></div>
-    </div>
+        <!-- swiper controls -->
+            <div class="flex justify-center items-center gap-4 mt-5 w-full">
+            <div class="swiper-slide-button swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-slide-button swiper-button-next"></div>
+        </div>
     
 </div>

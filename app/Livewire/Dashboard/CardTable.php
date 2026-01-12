@@ -39,6 +39,9 @@ class CardTable extends Component
         }
     }
 
+    public function placeholder(){
+        return view('livewire.placeholders.dashboard.card-table');
+    }
     public function render()
     {
         return view('livewire.dashboard.card-table');
