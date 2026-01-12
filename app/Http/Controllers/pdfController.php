@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\Browsershot\Browsershot;
+use App\Models\{Producto, Registro};
+use Illuminate\Support\Facades\Cache;
 
 class pdfController extends Controller
 {
@@ -18,7 +20,37 @@ class pdfController extends Controller
     public function generateReport($fechaInicio, $fechaFin)
     {
         set_time_limit(240);
-        return Pdf::view('pdfs.report', ['fechaInicio' => $fechaInicio, 'fechaFin' => $fechaFin])
+        
+        // Calculate report data statically without using Livewire
+        $productos = Producto::all();
+        $reporteData = $productos->map(function($producto) use ($fechaInicio, $fechaFin) {
+            $registro = Registro::whereBetween('fecha_registro', [$fechaInicio, $fechaFin])
+                            ->where('producto_id', $producto->id_producto);
+            $entrada = $registro->where('tipo_registro', 1)->sum('cantidad_registro');
+            $salida = $registro->where('tipo_registro', 0)->sum('cantidad_registro');
+            
+            $totalRegistro = Registro::where('fecha_registro', '<', $fechaFin)
+                            ->where('producto_id', $producto->id_producto);
+            $totalEntrada = $totalRegistro->where('tipo_registro', 1)->sum('cantidad_registro');
+            $totalSalida = $totalRegistro->where('tipo_registro', 0)->sum('cantidad_registro');
+            
+            $exFinal = $totalEntrada - $totalSalida;
+            $exInicial = $exFinal - ($entrada - $salida);
+            
+            return [
+                'datos_producto' => $producto,
+                'exInicial' => $exInicial,
+                'totalEntrada' => $entrada,
+                'totalSalida' => $salida,
+                'exFinal' => $exFinal,
+            ];
+        })->toArray();
+        
+        return Pdf::view('pdfs.report', [
+            'fechaInicio' => $fechaInicio,
+            'fechaFin' => $fechaFin,
+            'reporteData' => $reporteData
+        ])
                     ->withBrowsershot(function (Browsershot $browsershot) {
                         $browsershot->setOption('protocolTimeout', 120000); // 120 segundos
                     })
