@@ -34,10 +34,10 @@
                         <td>{{ $item['datos_producto']->clave->valor_clave }}</td>
                         <td style="word-wrap: break-word; max-width: 150px;">{{ $item['datos_producto']->nombre_producto }}</td>
 
-                        <td class="{{ $item['exInicial'] > 0 ? 'text-green' : ($item['exInicial'] == 0 ? 'text-gray' : 'text-red') }}">{{ $item['exInicial'] }}</td>
-                        <td class="{{ $item['totalEntrada'] > 0 ? 'text-green' : ($item['totalEntrada'] == 0 ? 'text-gray' : 'text-red') }}">{{ $item['totalEntrada'] }}</td>
-                        <td class="{{ $item['totalSalida'] > 0 ? 'text-red' : ($item['totalSalida'] == 0 ? 'text-gray' : 'text-red') }}">{{ $item['totalSalida'] }}</td>
-                        <td class="{{ $item['exFinal'] > 0 ? 'text-green' : ($item['exFinal'] == 0 ? 'text-gray' : 'text-red') }}">{{ $item['exFinal'] }}</td>
+                        <td class="text-gray">{{ $item['exInicial'] }}</td>
+                        <td class="text-green">{{ $item['totalEntrada'] }}</td>
+                        <td class="text-red">{{ $item['totalSalida'] }}</td>
+                        <td class="{{ $item['exFinal'] > 0 ? 'text-green' : 'text-red' }}">{{ $item['exFinal'] }}</td>
                     </tr>
                 @empty
                     <tr>

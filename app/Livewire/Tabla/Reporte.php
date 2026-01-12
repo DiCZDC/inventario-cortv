@@ -55,7 +55,7 @@ class Reporte extends Component
     public function placeholder(){
     return view('livewire.placeholders.tabla.reporte-placeholder');
     }
-
+      
 
     //Calcula el total inicial del producto en la fecha inicial seleccionadas
     #[Computed()]
@@ -67,10 +67,10 @@ class Reporte extends Component
                 $pos = ($producto->id_producto)-1;
                 
                 //Totales de entradas y salidas en el rango de fechas
+                $entrada = Registro::whereBetween('fecha_registro',[$this->fechaInicio,$this->fechaFin])
+                                ->where('producto_id', $producto->id_producto)->where('tipo_registro', 1)->sum('cantidad_registro');
                 $salida = Registro::whereBetween('fecha_registro',[$this->fechaInicio,$this->fechaFin])
                                 ->where('producto_id', $producto->id_producto)->where('tipo_registro', 0)->sum('cantidad_registro');
-                $entrada = Registro::whereBetween('fecha_registro',[$this->fechaInicio,$this->fechaFin])
-                                ->where('producto_id', $producto->id_producto)->sum('cantidad_registro');
                 
                 
                 //Totales de entradas y salidas hasta la fecha final
