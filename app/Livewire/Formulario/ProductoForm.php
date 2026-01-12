@@ -3,10 +3,13 @@
 namespace App\Livewire\Formulario;
 
 use Livewire\Component;
-use App\Models\Producto;
+use App\Models\{
+    Producto,
+    Area
+};
 use Livewire\Attributes\Validate;
 
-class Formulario extends Component
+class ProductoForm extends Component
 {
 
     //adaptabilidad del formulario
@@ -36,17 +39,37 @@ class Formulario extends Component
             'descripcion_producto' => 'required|string|max:500',
             'unidad_producto' => 'required|string|max:60',            
         ]);
-
-        Producto::create(
-            $this->only(['nombre_producto', 'descripcion_producto', 'unidad_producto', 'area_producto'])
+        $producto = Producto::create(
+            $this->only(['nombre_producto', 'descripcion_producto', 'unidad_producto'])
         );
- 
+        
+        Clave::create(
+            $this->only(['area_producto',$producto->id_producto,''])
+        );
+
+    
         session()->flash('status', 'Producto creado exitosamente.');
+        
         //$this->reset(['nombre_producto', 'descripcion_producto', 'unidad_producto', 'area_producto']);       
+    }
+
+    #[Computed(cached: true)]
+    public function areas()
+    {
+        return Area::all();
     }
 
     public function render()
     {
-        return view('livewire.formulario.formulario');
+        return view('livewire.formulario.productoForm');
     }
 }
+
+
+/*
+use App\Models\{
+    Producto,
+    Area,
+    Clave
+};
+*/

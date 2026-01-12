@@ -10,7 +10,7 @@
         lg:mt-1 box-border w-full flex lg:flex-row lg:justify-around lg:gap-8 lg:p-8">
             
             {{-- COLUMNA IZQUIERDA: Formulario --}}
-            <livewire:formulario.formulario titulo_f="Registra un Nuevo Producto" />
+            <livewire:formulario.productoForm titulo_f="Registra un Nuevo Producto" />
             
             {{-- COLUMNA DERECHA: Tabla --}}
             <livewire:dashboard.table 
