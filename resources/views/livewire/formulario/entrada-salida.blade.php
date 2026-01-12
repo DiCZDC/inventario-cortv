@@ -28,10 +28,9 @@
                         placeholder="Escribe o selecciona un producto">
                 
                 <datalist id="productos">
-                    <option value="Producto 1">
-                    <option value="Producto 2">
-                    <option value="Polla">
-                    <option value="Ceviche">
+                    @foreach($this->productos as $producto)
+                        <option value="{{ $producto->nombre_producto}}">
+                    @endforeach
                 </datalist>
 
                 {{-- validacion del formulario --}}

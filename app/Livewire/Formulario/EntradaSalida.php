@@ -1,9 +1,15 @@
 <?php
 
 namespace App\Livewire\Formulario;
-
+use Livewire\Attributes\{
+    Computed
+};
 use Livewire\Component;
-use App\Models\Entrada;
+use App\Models\{
+    Entrada,
+    Salida,
+    Producto,
+    };
 use Livewire\Attributes\Validate;
 
 
@@ -11,7 +17,10 @@ class EntradaSalida extends Component
 {
     //propiedades para el formulario, creacion de registros de entrada y salida 
     //ATRIBUTOS Con validacion
+    #[Validate('required|integer|min:1')]
+    
     public $cantidad_registro;
+
     public $tipo_registro; // 1 para entrada, 0 para salida
     public $nombre_producto;
    
@@ -30,6 +39,13 @@ class EntradaSalida extends Component
     {
         
     }
+
+    #[Computed()]
+    public function productos()
+    {
+        return Producto::all();
+    }
+
 
     public function render()
     {
