@@ -54,92 +54,45 @@ class Reporte extends Component
         return "reporte-{$this->fechaInicio}-{$this->fechaFin}-{$tipo}";
     }
     
-    //Calcula el total inicial del producto en la fecha inicial seleccionadas
+    //Datos Reporte
     #[Computed()]
-    public function exInicial(){
+    public function datosReporte(){
         $Productos = $this->productos();
-        return Cache::remember($this->getCacheKey('exInicial'), now()->addMinutes(60), function() use ($Productos) {
+
+        return Cache::remember($this->getCacheKey('datosReporte'), now()->addMinutes(60), function() use ($Productos) {
             return $Productos ->map(function($producto){
                 $pos = ($producto->id_producto)-1;
-                return ($this->exFinal[($pos)] - ($this->Entradas[($pos)] - $this->Salidas[($pos)]));
-            });
-        }); 
-    } 
+                //Registros en el rango de fechas
+                $registro = Registro::whereBetween('fecha_registro',[$this-> fechaInicio,$this -> fechaFin])
+                                ->where('producto_id', $producto->id_producto);
+                //Totales de entradas y salidas en el rango de fechas
+                    $entrada = $registro->where('tipo_registro',1)->sum('cantidad_registro');
+                    $salida = $registro->where('tipo_registro',0)->sum('cantidad_registro');
+                
+                //Registros totales hasta la fecha final
+                $totalRegistro = Registro::where('fecha_registro','<',$this -> fechaFin)
+                                ->where('producto_id', $producto->id_producto);
+                //Totales de entradas y salidas hasta la fecha final
+                $totalEntrada = $totalRegistro->where('tipo_registro',1)->sum('cantidad_registro');
+                $totalSalida = $totalRegistro->where('tipo_registro',0)->sum('cantidad_registro');
+                
+                //Existencias finales e iniciales en el periodo
+                $exFinal = $totalEntrada - $totalSalida;
+                $exInicial = $exFinal - ($entrada - $salida);
 
-    
-    //Calcula las existencias finales del producto en la fecha final seleccionada
-    #[Computed()]
-    public function exFinal(){
-        $Productos = $this->productos();
-        return Cache::remember($this->getCacheKey('exFinal'), now()->addMinutes(60), function() use ($Productos) {
-            return $Productos ->map(function($producto){
-                $pos = ($producto->id_producto)-1;
-                return ($this->totalEntradas[($pos)] - $this->totalSalidas[($pos)]);
-            });
-        });
-    }
-    #[Computed()]
-    public function totalEntradas(){
-        $Productos = $this->productos();
-        return Cache::remember($this->getCacheKey('totalEntradas'), now()->addMinutes(60), function() use ($Productos) {
-            return $Productos->map(function($producto){
-                return Registro::where('tipo_registro',1)
-                                ->where('fecha_registro','<',$this -> fechaFin)
-                                ->where('producto_id', $producto->id_producto)
-                                ->sum('cantidad_registro');
-            });
-        });
-    }
-    #[Computed()]
-    public function totalSalidas(){
-        $Productos = $this->productos();
 
-        return Cache::remember($this->getCacheKey('totalSalidas'), now()->addMinutes(60), function() use ($Productos) {
-            return $Productos->map(function($producto){
-                return Registro::where('tipo_registro',0)
-                                ->where('fecha_registro','<',$this -> fechaFin)
-                                ->where('producto_id', $producto->id_producto)
-                                ->sum('cantidad_registro');
+                return [
+                    'datos_producto' => $producto,
+                    'exInicial' => $exInicial,
+                    'totalEntrada' => $entrada,
+                    'totalSalida' => $salida,
+                    'exFinal' => $exFinal,
+                ];
             });
         });
     }
 
 
-
-    //Calcula el total de entradas del producto en el rango de fechas seleccionado
-    #[Computed()]
-    public function Entradas(){  
-        $Productos = $this->productos();
-
-        return Cache::remember($this->getCacheKey('Entradas'), now()->addMinutes(60), function() use ($Productos) {
-            return $Productos->map(function($producto){
-                return Registro::where('tipo_registro',1)
-                                ->whereBetween('fecha_registro',[$this-> fechaInicio,$this -> fechaFin])
-                                ->where('producto_id', $producto->id_producto)
-                                ->sum('cantidad_registro');
-            });
-        });
-    }
-
-    //Calcula el total de salidas del producto en el rango de fechas seleccionado
-    #[Computed()]
-    public function Salidas(){
-        // $Salidas = $this ->salidas();
-        $Productos = $this->productos();
-        return Cache::remember($this->getCacheKey('Salidas'), now()->addMinutes(60), function() use ($Productos) {
-            return $Productos->map(function($producto){
-                return Registro::where('tipo_registro',0)
-                                ->whereBetween('fecha_registro',[$this-> fechaInicio,$this -> fechaFin])
-                                ->where('producto_id', $producto->id_producto)
-                                ->sum('cantidad_registro');
-            });
-        });
-        
-        /*
-        Esta linea se usa para calcular el total de salidas 
-        $Salidas->sum(function($registro) { return $registro->Salida->cantidad_salida; }); 
-        */
-    }
     //Productos
     #[Computed()]
     public function productos(){

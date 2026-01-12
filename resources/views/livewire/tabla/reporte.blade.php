@@ -81,16 +81,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($this->productos as $producto)
+                        @foreach ($this->datosReporte as $producto)
                             <tr class="border-b dark:border-gray-700">
                                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center w-auto">{{ $pos }}</th>
-                                <td class="px-4 py-3 text-center">{{ $producto->clave->valor_clave }}</td>
-                                <td class="px-4 py-3 break-word max-w-2">{{ $producto->nombre_producto }}</td>
-                                <td class="px-4 py-3 text-center">{{$this->exInicial[$loop->index]}}</td>
-                                <td class="px-4 py-3 text-center {{ $this->Entradas[$loop->index] > 0 ? 'text-green-500':'text-gray-500'}}">{{ $this->Entradas[$loop->index]}} </td>
-                                <td class="px-4 py-3 text-center {{ $this->Salidas[$loop->index] > 0 ? 'text-cortvRojoBasico':'text-gray-500'}}">{{ $this->Salidas[$loop->index] }} </td>
-                                <td class="px-4 py-3 text-center {{ $this->exFinal[$loop->index] > 0 ? 'text-green-500' : ($this->exFinal[$loop->index] == 0 ? 'text-gray-500' : 'text-cortvRojoBasico') }}">
-                                    {{ $this->exFinal[$loop->index] }}
+                                <td class="px-4 py-3 text-center">{{ $producto['datos_producto']->clave->valor_clave }}</td>
+                                <td class="px-4 py-3 break-word max-w-2">{{ $producto['datos_producto']->nombre_producto }}</td>
+                                <td class="px-4 py-3 text-center">{{$producto['exInicial']}}</td>
+                                <td class="px-4 py-3 text-center {{ $producto['totalEntrada'] > 0 ? 'text-green-500':'text-gray-500'}}">{{ $producto['totalEntrada'] }} </td>
+                                <td class="px-4 py-3 text-center {{ $producto['totalSalida'] > 0 ? 'text-cortvRojoBasico':'text-gray-500'}}">{{ $producto['totalSalida'] }} </td>
+                                <td class="px-4 py-3 text-center {{ $producto['exFinal'] > 0 ? 'text-green-500' : ($producto['exFinal'] == 0 ? 'text-gray-500' : 'text-cortvRojoBasico') }}">
+                                    {{ $producto['exFinal'] }}
                                 </td>
                                 
                             </tr>
