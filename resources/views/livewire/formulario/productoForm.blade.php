@@ -84,11 +84,9 @@
 
                 <select id="area" name="area" wire:model.blur="area_producto"
                     class="border-cortvBorde border-1 rounded-md p-2 h-[40px] w-full mt-2 text-[16px]">
-                    <option value="">Seleccione un área</option>
-                    <option value="informatica"> Informática </option>
-                    <option value="electronica"> Electrónica </option>
-                    <option value="mecanica"> Mecánica </option>
-                    <option value="civil"> Civil </option>
+                    @foreach ($this->areas() as $area)
+                        <option value="{{ $area->id }}"> {{ $area->descripcion_area }} </option>
+                    @endforeach
                 </select>
 
                 {{-- validacion del formulario --}}

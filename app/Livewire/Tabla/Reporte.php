@@ -65,19 +65,19 @@ class Reporte extends Component
         return Cache::remember($this->getCacheKey('datosReporte'), now()->addMinutes(60), function() use ($Productos) {
             return $Productos ->map(function($producto){
                 $pos = ($producto->id_producto)-1;
-                //Registros en el rango de fechas
-                $registro = Registro::whereBetween('fecha_registro',[$this-> fechaInicio,$this -> fechaFin])
-                                ->where('producto_id', $producto->id_producto);
-                //Totales de entradas y salidas en el rango de fechas
-                    $entrada = $registro->where('tipo_registro',1)->sum('cantidad_registro');
-                    $salida = $registro->where('tipo_registro',0)->sum('cantidad_registro');
                 
-                //Registros totales hasta la fecha final
-                $totalRegistro = Registro::where('fecha_registro','<',$this -> fechaFin)
-                                ->where('producto_id', $producto->id_producto);
+                //Totales de entradas y salidas en el rango de fechas
+                $salida = Registro::whereBetween('fecha_registro',[$this->fechaInicio,$this->fechaFin])
+                                ->where('producto_id', $producto->id_producto)->where('tipo_registro', 0)->sum('cantidad_registro');
+                $entrada = Registro::whereBetween('fecha_registro',[$this->fechaInicio,$this->fechaFin])
+                                ->where('producto_id', $producto->id_producto)->sum('cantidad_registro');
+                
+                
                 //Totales de entradas y salidas hasta la fecha final
-                $totalEntrada = $totalRegistro->where('tipo_registro',1)->sum('cantidad_registro');
-                $totalSalida = $totalRegistro->where('tipo_registro',0)->sum('cantidad_registro');
+                $totalEntrada = Registro::where('fecha_registro','<',$this->fechaFin)
+                                ->where('producto_id', $producto->id_producto)->where('tipo_registro',1)->sum('cantidad_registro');
+                $totalSalida = Registro::where('fecha_registro','<',$this->fechaFin)
+                                ->where('producto_id', $producto->id_producto)->where('tipo_registro',0)->sum('cantidad_registro');
                 
                 //Existencias finales e iniciales en el periodo
                 $exFinal = $totalEntrada - $totalSalida;
