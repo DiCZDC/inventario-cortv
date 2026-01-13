@@ -27,21 +27,21 @@
     xs:w-1/2 xs:gap-2 xs:justify-center
     lg:w-[70%] lg:gap-[5px]  lg:items-start">
         <!-- nombre del producto -->
-<div class="
-text-cortvGrisTexto font-times text-[20px] font-semibold leading-[120%] tracking-[-0.36px] 
-overflow-hidden line-clamp-2
-xs:text-[22px]
-md:text-[23px]"        
-style="font-family: 'Times New Roman'; display: -webkit-box; -webkit-box-orient: vertical;">
-    {{ $registro->producto->nombre_producto }}
-</div>
+
 
 
         <!-- descripcion del cambio -->
         <!-- solicitado por -->
         {{-- condicional para saber si es una entrada o salida --}}
         @if ($mostrar_Nuevo_Producto)
-             
+             <div class="
+text-cortvGrisTexto font-times text-[20px] font-semibold leading-[120%] tracking-[-0.36px] 
+overflow-hidden line-clamp-2
+xs:text-[22px]
+md:text-[23px]"        
+style="font-family: 'Times New Roman'; display: -webkit-box; -webkit-box-orient: vertical;">
+    {{ $producto->nombre_producto }}
+</div>
         <!-- area -->
         <div class="
         text-cortvGrisTexto font-times text-[14px] leading-[120%] tracking-[-0.36px]
@@ -72,6 +72,15 @@ style="font-family: 'Times New Roman'; display: -webkit-box; -webkit-box-orient:
         </div>
         @else
 
+        <!-- nombre del producto -->
+        <div class="
+text-cortvGrisTexto font-times text-[20px] font-semibold leading-[120%] tracking-[-0.36px] 
+overflow-hidden line-clamp-2
+xs:text-[22px]
+md:text-[23px]"        
+style="font-family: 'Times New Roman'; display: -webkit-box; -webkit-box-orient: vertical;">
+    {{ $registro->producto->nombre_producto }}
+</div>
         
         <div class="
         text-cortvGrisTexto font-times text-[14px] leading-[120%] tracking-[-0.36px]

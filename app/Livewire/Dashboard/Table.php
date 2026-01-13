@@ -36,7 +36,7 @@ class Table extends Component
     
     #[Computed()]
     public function Productos(){
-        return Producto::orderBy('created_at','DESC')->take(3)->get();
+        return Producto::orderBy('id_producto','DESC')->take(3)->get();
     }
 
     //obtiene los ultimos 3 registros de entradas y salidas
