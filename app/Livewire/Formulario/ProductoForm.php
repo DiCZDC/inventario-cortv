@@ -9,6 +9,7 @@ use App\Models\{
     Clave
 };
 use Livewire\Attributes\Validate;
+use Livewire\Attributes\Computed;
 
 class ProductoForm extends Component
 {
@@ -31,7 +32,7 @@ class ProductoForm extends Component
     public $unidad_producto = '';
     
     #[Validate('required', message:'Seleccione un área para el producto')]
-    public $id_area = 1;
+    public $id_area = 1; // Área por defecto
     
     public function save()
     {
@@ -40,6 +41,7 @@ class ProductoForm extends Component
             'descripcion_producto' => 'required|string|max:500',
             'unidad_producto' => 'required|string|max:60',            
         ]);
+
         $producto = Producto::create(
             $this->only(['nombre_producto', 'descripcion_producto', 'unidad_producto'])
         );
@@ -61,10 +63,11 @@ class ProductoForm extends Component
     
         session()->flash('status', 'Producto creado exitosamente.');
         
-        $this->reset(['nombre_producto', 'descripcion_producto', 'unidad_producto', 'id_area']);       
+        $this->reset(['nombre_producto', 'descripcion_producto', 'unidad_producto', 'id_area']); 
+        return $this->redirect('/nuevo-producto');      
     }
 
-    #[Computed(cached: true)]
+    #[Computed(cache: true)]
     public function areas()
     {
         return Area::all();
