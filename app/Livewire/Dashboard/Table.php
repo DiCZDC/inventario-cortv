@@ -4,7 +4,6 @@ namespace App\Livewire\Dashboard;
 use Livewire\Attributes\Computed;
 use App\Models\{Registro, Producto};
 use Livewire\Component;
-use App\Models\Producto;
 
 class Table extends Component
 {
