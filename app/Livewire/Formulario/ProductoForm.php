@@ -63,7 +63,8 @@ class ProductoForm extends Component
     
         session()->flash('status', 'Producto creado exitosamente.');
         
-        $this->reset(['nombre_producto', 'descripcion_producto', 'unidad_producto', 'id_area']);       
+        $this->reset(['nombre_producto', 'descripcion_producto', 'unidad_producto', 'id_area']); 
+        return $this->redirect('/nuevo-producto');      
     }
 
     #[Computed(cache: true)]

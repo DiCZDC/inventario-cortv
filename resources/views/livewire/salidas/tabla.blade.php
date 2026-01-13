@@ -102,10 +102,7 @@
                     
                         
                         {{-- Componente Livewire del formulario --}}
-                        <livewire:formulario.entrada-salida 
-                            :titulo_f="'Registra una Nueva Salida'" 
-                            :p_entrada_salida="'Producto que sale del inventario'" 
-                            :cantidad_entrada_salida="'Cantidad de productos que salen del inventario'"
+                        <livewire:formulario.form-salida                             
                             :enModal="true"
                         />
                     </div>

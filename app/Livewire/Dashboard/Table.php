@@ -45,10 +45,10 @@ class Table extends Component
         switch ($this->tipo){
             case 0:
             case 1:
-                return Registro::orderBy('fecha_registro','DESC')->take(3)->get();
+                return Registro::orderBy('created_at','DESC')->take(3)->get();
                 // return Producto::orderBy('created_at','DESC')->take(3)->get();
             case 2:
-                return Registro::where('tipo_registro', 1)->orderBy('fecha_registro','DESC')->take(3)->get();
+                return Registro::where('tipo_registro', 1)->orderBy('created_at','DESC')->take(3)->get();
         }
     }
 
