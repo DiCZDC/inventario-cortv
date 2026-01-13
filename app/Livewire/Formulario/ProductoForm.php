@@ -31,7 +31,7 @@ class ProductoForm extends Component
     public $unidad_producto = '';
     
     #[Validate('required', message:'Seleccione un área para el producto')]
-    public $id_area = null;
+    public $id_area = 1;
     
     public function save()
     {
