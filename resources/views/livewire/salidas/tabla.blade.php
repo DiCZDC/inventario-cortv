@@ -45,10 +45,9 @@
                                     <td class="px-4 py-3">{{ $salida['cantidad_registro']}}</td>
                                     <td class="px-4 py-3">{{ $salida['tipo_unidad'] }}</td>
                                     <td class="px-4 py-3">{{ $salida['producto_nombre'] }}</td>
-                                    
                                 </tr>
                             @endforeach                         
-
+                            
                         </tbody>
                     </table>
                 </div>

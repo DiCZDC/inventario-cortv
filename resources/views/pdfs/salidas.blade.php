@@ -9,8 +9,16 @@
 
         <div class="header">
             <div class="logo">
-                <img src="logo_oaxaca.png" alt="primero">
-                <img src="logo.png" alt="segundo">                   
+                <div class="primero">
+                    @php $logo1 = public_path('images/logo_oaxaca.png'); @endphp
+                    @inlinedImage($logo1)
+                </div>
+                <div class="segundo">
+                    @php $logo2 = public_path('images/logo_cortv.png'); @endphp
+                    @inlinedImage($logo2)
+                </div>
+                {{-- <img src="../images/logo_oaxaca.png" alt="primero">
+                <img src="../images/logo_cortv.png" alt="segundo">                    --}}
             </div>
 
             <div class="corporacion">
@@ -62,32 +70,21 @@
                 </thead>
 
                 <tbody >
-                    <tr>
-                        <td>10</td>
-                        <td>Hojas</td>
-                        <td>Hojas tamaño carta para impresora</td>
-                    </tr>
-
-                    <tr>
-                        <td>5</td>
-                        <td>Cartuchos</td>
-                        <td>Cartuchos de tinta negra para impresora HP</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>2</td>
-                        <td>Resmas</td>
-                        <td>Resmas de papel tamaño carta para impresora</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>3</td>
-                        <td>Libretas</td>
-                        <td>Libretas tamaño oficio para notas</td>
+                    @forelse($registros as $registro)
+                        <tr>
+                            <td>{{ $registro->cantidad_registro }}</td>
+                            <td>{{ $registro->producto->unidad_producto ?? 'N/A' }}</td>
+                            <td>{{ $registro->producto->nombre_producto ?? 'N/A' }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3">No hay registros</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             
             </table>
-
+            {{-- <p>Total Registros:: ({{ count($registros) }})</p> --}}
         </div>
 
         <div class="autorizacion">
