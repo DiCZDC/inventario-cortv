@@ -40,7 +40,6 @@ class FormSalida extends Component
             persona_id: $user->id,
             producto_id: $producto->id_producto,
             cantidad_registro: $this->cantidad_registro,
-            tipo_registro: false,
             tipo_unidad: $producto->unidad_producto,
             producto_nombre: $this->nombre_producto
         );
@@ -50,7 +49,7 @@ class FormSalida extends Component
         $this->reset(['nombre_producto', 'cantidad_registro']);    
 
     }
-    
+
     #[Computed()]
     public function productos()
     {

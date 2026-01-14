@@ -44,16 +44,39 @@ class Tabla extends Component
     {
         $this->showModal = false;
     }
+    //Guardar datos de salida en la base de datos
+    public function guardarSalidas()
+    {
+        foreach ($this->salidas as $salida) {
+            Registro::create([
+                'persona_id' => $salida['persona_id'],
+                'producto_id' => $salida['producto_id'],
+                'cantidad_registro' => $salida['cantidad_registro'],
+                'tipo_registro' => false,
+            ]);
+        }
+
+        // Limpiar el array de salidas después de guardar
+        $this->salidas = [];
+
+        // Cerrar el modal
+        $this->cerrarModal();
+
+        // Flash message de exito
+        session()->flash('status', 'Salidas guardadas exitosamente.');
+        
+    }
+
+
     //Cuando ocurra el evento "salida-agregada", se ejecuta este metodo
     #[On('salida-agregada')]
-    public function agregarSalida($persona_id, $producto_id, $cantidad_registro, $tipo_registro, $tipo_unidad, $producto_nombre)
+    public function agregarSalida($persona_id, $producto_id, $cantidad_registro, $tipo_unidad, $producto_nombre)
     {
         // Agregar los datos al array de salidas para procesarlos después
         $this->salidas[] = [
             'persona_id' => $persona_id,
             'producto_id' => $producto_id,
             'cantidad_registro' => $cantidad_registro,
-            'tipo_registro' => $tipo_registro,
             'tipo_unidad' => $tipo_unidad,
             'producto_nombre' => $producto_nombre,
         ];
