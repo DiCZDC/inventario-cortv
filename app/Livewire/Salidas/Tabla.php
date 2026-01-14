@@ -4,7 +4,8 @@ namespace App\Livewire\Salidas;
 
 use Livewire\Component;
 use App\Models\Registro;
-use Livewire\WithPagination;    
+use Livewire\WithPagination;   
+use App\Http\Controllers\pdfController; 
 use Livewire\Attributes\{
     Url,
     Computed,
@@ -47,25 +48,39 @@ class Tabla extends Component
     }
     //Guardar datos de salida en la base de datos
     public function guardarSalidas()
-    {
-        foreach ($this->salidas as $salida) {
-            Registro::create([
-                'persona_id' => $salida['persona_id'],
-                'producto_id' => $salida['producto_id'],
-                'cantidad_registro' => $salida['cantidad_registro'],
-                'tipo_registro' => false,
+    {   
+        //Contar la cantidad de registros a pasar al PDF
+        $cantidad_registro = count($this->salidas);
+
+
+        //Comprobar que haya salidas para guardar
+        if($cantidad_registro > 0){ 
+            foreach ($this->salidas as $salida) {
+                Registro::create([
+                    'persona_id' => $salida['persona_id'],
+                    'producto_id' => $salida['producto_id'],
+                    'cantidad_registro' => $salida['cantidad_registro'],
+                    'tipo_registro' => false,
+                ]);
+            }
+
+            // Limpiar el array de salidas después de guardar
+            $this->salidas = [];
+            
+            // Cerrar el modal
+            $this->cerrarModal();
+            
+            // Flash message de exito
+            session()->flash('status', 'Salidas guardadas exitosamente.');
+            // Redirigir a la ruta que genera el PDF
+            return redirect()->route('generate.formato.salida',[
+                'cantidad_registro' => $cantidad_registro,
             ]);
         }
-
-        // Limpiar el array de salidas después de guardar
-        $this->salidas = [];
-
-        // Cerrar el modal
-        $this->cerrarModal();
-
-        // Flash message de exito
-        session()->flash('status', 'Salidas guardadas exitosamente.');
-        
+        else{
+            // Flash message de error si no hay salidas para guardar
+            session()->flash('status', 'No hay salidas para guardar.');
+        }
   }
 
     public function resetearFormulario()
