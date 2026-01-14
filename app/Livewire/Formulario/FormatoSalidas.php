@@ -37,8 +37,13 @@ class FormatoSalidas extends Component
             'entrega' => 'required|string|max:255',
         ]);
 
-        // Aqui va lo logica w
-
+        $this->dispatch('formato-salida-guardado', 
+            area: $this->area,
+            nombre: $this->nombre,
+            categoria: $this->categoria,
+            autoriza: $this->autoriza,
+            entrega: $this->entrega
+        );
         
         session()->flash('status', 'Formato de salida guardado correctamente.');
 

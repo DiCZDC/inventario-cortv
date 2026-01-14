@@ -65,7 +65,7 @@ class pdfController extends Controller
             ->download();
     }
 
-    public function generateFormatoSalida($cantidad_registro)
+    public function generateFormatoSalida($cantidad_registro, $datos_registro)
     {
         set_time_limit(240);
 
@@ -79,6 +79,7 @@ class pdfController extends Controller
 
         return Pdf::view('pdfs.salidas', [
             'registros' => $registros,
+            'datos'=>$datos_registro,
         ])
             ->name('FORMATO_DE_SALIDA.pdf')
             ->download();

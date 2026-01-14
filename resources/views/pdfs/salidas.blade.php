@@ -36,22 +36,22 @@
             <div class="informacion-s">
                 <div>
                     <span> <b>Area que solicita:</b> </span>
-                    <span>Produccion</span>
+                    <span>{{$datos['area'] }}</span>
                 </div>
                 
                 <div>
                     <span><b>Nombre:</b></span>
-                    <span>Daniel Eduardo Garcia Salvador</span>
+                    <span>{{$datos['nombre'] }}</span>
                 </div>
 
                 <div>
                     <span><b>Fecha:</b></span>
-                    <span>03 de junio de 2025</span>
+                    <span>{{$datos['fecha'] }}</span>
                 </div>
 
                 <div>
                     <span><b>Categoria:</b></span>
-                    <span>Productos de impresion</span>
+                    <span>{{$datos['categoria'] }}</span>
                 </div>
 
             </div>

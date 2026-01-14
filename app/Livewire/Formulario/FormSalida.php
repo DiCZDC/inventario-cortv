@@ -28,7 +28,7 @@ class FormSalida extends Component
     
     // Indica si el formulario está dentro de un modal
     public $enModal = false;    
-
+    
     public function save(){
         $this->validate();
         
