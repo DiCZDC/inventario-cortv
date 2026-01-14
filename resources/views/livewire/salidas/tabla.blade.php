@@ -12,22 +12,7 @@
                             <tr>
                                 @include('livewire.includes.table-sort-th', [
                                     'name' => 'NoFiltro',
-                                    'displayName' => 'ID',
-                                    'sortDir' => $sortDir,
-                                ])
-                                @include('livewire.includes.table-sort-th', [
-                                    'name' => 'NoFiltro',
-                                    'displayName' => 'Nombre Producto',
-                                    'sortDir' => $sortDir,
-                                ])
-                                @include('livewire.includes.table-sort-th', [
-                                    'name' => 'NoFiltro',
-                                    'displayName' => 'Fecha',
-                                    'sortDir' => $sortDir,
-                                ])
-                                @include('livewire.includes.table-sort-th', [
-                                    'name' => 'NoFiltro',
-                                    'displayName' => 'Encargado',
+                                    'displayName' => 'Numeración',
                                     'sortDir' => $sortDir,
                                 ])
                                 @include('livewire.includes.table-sort-th', [
@@ -35,26 +20,32 @@
                                     'displayName' => 'Cantidad',
                                     'sortDir' => $sortDir,
                                 ])
+                                @include('livewire.includes.table-sort-th', [
+                                    'name' => 'NoFiltro',
+                                    'displayName' => 'Nombre del Producto',
+                                    'sortDir' => $sortDir,
+                                ])
+                               
 
                             </tr>
                         </thead>
                         <tbody>
-                            @if($this->Salidas->isEmpty())
+                            @if($salidas== [])
                                 <tr>
                                     <td colspan="5" class="px-4 py-3 text-center text-gray-500">
                                         Aun no se han agregado salidas a este reporte.
                                     </td>
                                 </tr>
                             @endif
-                            @foreach ($this->Salidas as $salida)
-                                <tr class="border-b dark:border-gray-700" wire:key="{{ $salida->id_registro }}">
+                            @foreach ($salidas as $salida)
+                                <tr class="border-b dark:border-gray-700" wire:key="{{ $loop->index }}">
                                     <th scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $salida->id_registro }}</th>
-                                    <td class="px-4 py-3">{{ $salida->producto->nombre_producto }}</td>
-                                    <td class="px-4 py-3">{{ $salida->fecha_registro }} </td>
-                                    <td class="px-4 py-3">{{ $salida->persona->nombre_persona }}</td>
-                                    <td class="px-4 py-3">{{ $salida->cantidad_registro }}</td>
+                                        {{ $loop->index+1 }}</th>
+                                    <td class="px-4 py-3">{{ $salida['cantidad_registro']}}</td>
+                                    <td class="px-4 py-3">{{ $salida['tipo_unidad'] }}</td>
+                                    <td class="px-4 py-3">{{ $salida['producto_nombre'] }}</td>
+                                    
                                 </tr>
                             @endforeach                         
 
@@ -81,7 +72,8 @@
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
-                        <span class="text-base text-white whitespace-nowrap">Generar formato de salida</span>
+                        <span class="text-base text-white whitespace-nowrap">Registrar salidas y<br>generar formato de salida</span>
+                        
                     </button>
 
                 </div>

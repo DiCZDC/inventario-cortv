@@ -7,7 +7,8 @@ use App\Models\Registro;
 use Livewire\WithPagination;    
 use Livewire\Attributes\{
     Url,
-    Computed
+    Computed,
+    On
 };
 
 class Tabla extends Component
@@ -20,7 +21,7 @@ class Tabla extends Component
     public $sortBy = 'id_registro'; 
     public $sortDir = 'ASC'; 
 
-    public $cant_registros = 0;
+    public $salidas = [];
 
     public function setSortBy($sortBy){
         if($sortBy === 'NoFiltro') {
@@ -43,12 +44,23 @@ class Tabla extends Component
     {
         $this->showModal = false;
     }
-    #[Computed()]
-    public function Salidas(){
-        return Registro::where('tipo_registro', false)->orderBy('id_registro', 'DESC')->take($this->cant_registros)->get(); 
+    //Cuando ocurra el evento "salida-agregada", se ejecuta este metodo
+    #[On('salida-agregada')]
+    public function agregarSalida($persona_id, $producto_id, $cantidad_registro, $tipo_registro, $tipo_unidad, $producto_nombre)
+    {
+        // Agregar los datos al array de salidas para procesarlos después
+        $this->salidas[] = [
+            'persona_id' => $persona_id,
+            'producto_id' => $producto_id,
+            'cantidad_registro' => $cantidad_registro,
+            'tipo_registro' => $tipo_registro,
+            'tipo_unidad' => $tipo_unidad,
+            'producto_nombre' => $producto_nombre,
+        ];
     }
-   
 
+
+    
     public function render()
     {
         return view('livewire.salidas.tabla');
