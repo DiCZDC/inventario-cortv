@@ -38,12 +38,17 @@ class FormSalida extends Component
             'persona_id' => $user->id,
             'producto_id' => $producto->id_producto,
             'cantidad_registro' => $this->cantidad_registro,
-            'tipo_registro' => $this->tipo_registro,
+            'tipo_registro' => false, // false para salida
         ]);
         // Flash message de exito
-        session()->flash('status', 'Registro de '.($this->tipo_registro ? 'entrada' : 'salida').' exitoso.
+        session()->flash('status', 'Registro de salida exitoso.
                         Recuerda recargar la página para ver los cambios en el inventario.');
-        $this->reset(['nombre_producto', 'cantidad_registro']);    
+        $this->reset(['nombre_producto', 'cantidad_registro']);
+        
+        // Emitir evento para cerrar el modal si está en modal
+        if($this->enModal) {
+            $this->dispatch('salidaGuardada');
+        }    
     }
 
     #[Computed()]

@@ -18,7 +18,8 @@ class Tabla extends Component
     public $showModal = false;
     public $search = '';
     public $sortBy = 'id_registro'; 
-    public $sortDir = 'ASC'; 
+    public $sortDir = 'ASC';
+    public $formKey = 0; 
 
     public $cant_registros = 0;
 
@@ -43,6 +44,13 @@ class Tabla extends Component
     {
         $this->showModal = false;
     }
+
+    public function resetearFormulario()
+    {
+        $this->formKey++; // Incrementar para forzar recreación del componente
+    }
+
+    protected $listeners = ['salidaGuardada' => 'resetearFormulario'];
     #[Computed()]
     public function Salidas(){
         return Registro::where('tipo_registro', false)->orderBy('id_registro', 'DESC')->take($this->cant_registros)->get(); 
