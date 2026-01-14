@@ -11,7 +11,7 @@
             font-family: 'Times New Roman', Times, serif;
             font-size: 12px;
             margin: 0;
-            padding: 2cm 2cm;
+            padding: 1.5cm 1.5cm;
         }
         
         * {
@@ -35,7 +35,7 @@
             vertical-align: middle;
         }
         .tabla-logos img {
-            height: 150px; 
+            max-height: 80px; 
             width: auto;
         }
 
@@ -235,8 +235,10 @@
                 <tbody>
                     <tr>
                         <td>
-                            <div class="firma-espacio"></div>
-                            <p class="nombre-firmante">0</p>
+                            <div class="firma-espacio"> </div>
+                            <p class="nombre-firmante"> 
+                                ___________________________________________________ <br> <br>
+                                O</p>
                         </td>
                         <td>
                             <div class="firma-espacio"></div>
@@ -265,7 +267,9 @@
                         </td>
                         <td>
                             <div class="firma-espacio"></div>
-                            <p class="nombre-firmante">0</p>
+                            <p class="nombre-firmante "> 
+                                ___________________________________________________ <br> <br> O 
+                            </p>
                         </td>
                     </tr>
                 </tbody>
