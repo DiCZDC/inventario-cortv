@@ -67,7 +67,7 @@ class Tabla extends Component
         session()->flash('status', 'Salidas guardadas exitosamente.');
     }
 
-    protected $listeners = ['salidaGuardada' => 'resetearFormulario'];
+    protected $listeners = ['salidaGuardada' => 'cerrarModal'];
 
     //Cuando ocurra el evento "salida-agregada", se ejecuta este metodo
     #[On('salida-agregada')]
