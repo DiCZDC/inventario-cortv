@@ -10,7 +10,8 @@ use App\Models\{
     Producto,
     Salida,
     Entrada,
-    Registro
+    Registro,
+    Area
 };
 
 class Reporte extends Component
@@ -19,12 +20,14 @@ class Reporte extends Component
         public $fechaInicio;
     #[Url(history: true)]
         public $fechaFin;
+    #[Url(history: true)]
+    public $areaFilter = ' ';
     
     public $showPdfButton = true;
     public $sortBy = 'id_producto';
     public $sortDir = 'ASC';
-    public $pos = 1;
-
+    
+    
     //Inicializa los totales de entradas y salidas
     public $totalSalida;
     public $totalEntrada;
@@ -33,6 +36,7 @@ class Reporte extends Component
     public function mount($fechaInicio = null, $fechaFin = null){
         $this->fechaInicio = $fechaInicio ?? date('Y-m-d');
         $this->fechaFin = $fechaFin ?? date('Y-m-d');
+        $this->areaFilter = ' ';
     }
 
     public function setSortBy($sortBy){
@@ -49,13 +53,17 @@ class Reporte extends Component
     
     //Genera una clave unica para cada consulta de cache basado en las fechas y el tipo de dato
     private function getCacheKey($tipo){
-        return "reporte-{$this->fechaInicio}-{$this->fechaFin}-{$tipo}";
+        return "reporte-{$this->fechaInicio}-{$this->fechaFin}-{$tipo}-{$this->areaFilter}";
     }
     
     public function placeholder(){
     return view('livewire.placeholders.tabla.reporte-placeholder');
     }
-
+    
+    #[Computed(cache:true)]
+    public function Areas(){
+        return Area::all();
+    }
 
     //Calcula el total inicial del producto en la fecha inicial seleccionadas
     #[Computed()]
@@ -64,26 +72,25 @@ class Reporte extends Component
 
         return Cache::remember($this->getCacheKey('datosReporte'), now()->addMinutes(60), function() use ($Productos) {
             return $Productos ->map(function($producto){
-                $pos = ($producto->id_producto)-1;
-                //Registros en el rango de fechas
-                $registro = Registro::whereBetween('fecha_registro',[$this-> fechaInicio,$this -> fechaFin])
-                                ->where('producto_id', $producto->id_producto);
-                //Totales de entradas y salidas en el rango de fechas
-                    $entrada = $registro->where('tipo_registro',1)->sum('cantidad_registro');
-                    $salida = $registro->where('tipo_registro',0)->sum('cantidad_registro');
                 
-                //Registros totales hasta la fecha final
-                $totalRegistro = Registro::where('fecha_registro','<',$this -> fechaFin)
-                                ->where('producto_id', $producto->id_producto);
+                //Totales de entradas y salidas en el rango de fechas
+                $entrada = Registro::whereBetween('fecha_registro',[$this->fechaInicio,$this->fechaFin])
+                                ->where('producto_id', $producto->id_producto)->where('tipo_registro', 1)->sum('cantidad_registro');
+                $salida = Registro::whereBetween('fecha_registro',[$this->fechaInicio,$this->fechaFin])
+                                ->where('producto_id', $producto->id_producto)->where('tipo_registro', 0)->sum('cantidad_registro');
+                
+                
                 //Totales de entradas y salidas hasta la fecha final
-                $totalEntrada = $totalRegistro->where('tipo_registro',1)->sum('cantidad_registro');
-                $totalSalida = $totalRegistro->where('tipo_registro',0)->sum('cantidad_registro');
+                $totalEntrada = Registro::where('fecha_registro','<',$this->fechaFin)
+                                ->where('producto_id', $producto->id_producto)->where('tipo_registro',1)->sum('cantidad_registro');
+                $totalSalida = Registro::where('fecha_registro','<',$this->fechaFin)
+                                ->where('producto_id', $producto->id_producto)->where('tipo_registro',0)->sum('cantidad_registro');
                 
                 //Existencias finales e iniciales en el periodo
                 $exFinal = $totalEntrada - $totalSalida;
                 $exInicial = $exFinal - ($entrada - $salida);
-
-
+    
+    
                 return [
                     'datos_producto' => $producto,
                     'exInicial' => $exInicial,
@@ -99,7 +106,13 @@ class Reporte extends Component
     //Productos
     #[Computed()]
     public function productos(){
-        return Producto::all();
+        return Cache::remember($this->getCacheKey('productos'), now()->addMinutes(60), function() {
+            return Producto::when($this->areaFilter !== ' ', function ($query) {
+                $query->whereHas('clave', function ($query) {
+                    $query->where('id_area', $this->areaFilter);
+                });
+            })->get(); // Add ->get() to execute the query
+        });
     }
     //Devuelve todos los productos para el reporte
     public function render()

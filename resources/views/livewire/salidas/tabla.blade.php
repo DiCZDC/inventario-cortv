@@ -8,25 +8,11 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <!-- Encabezados de la tabla con ordenamiento -->
                             <tr>
                                 @include('livewire.includes.table-sort-th', [
                                     'name' => 'NoFiltro',
-                                    'displayName' => 'ID',
-                                    'sortDir' => $sortDir,
-                                ])
-                                @include('livewire.includes.table-sort-th', [
-                                    'name' => 'NoFiltro',
-                                    'displayName' => 'Nombre Producto',
-                                    'sortDir' => $sortDir,
-                                ])
-                                @include('livewire.includes.table-sort-th', [
-                                    'name' => 'NoFiltro',
-                                    'displayName' => 'Fecha',
-                                    'sortDir' => $sortDir,
-                                ])
-                                @include('livewire.includes.table-sort-th', [
-                                    'name' => 'NoFiltro',
-                                    'displayName' => 'Encargado',
+                                    'displayName' => 'Numeración',
                                     'sortDir' => $sortDir,
                                 ])
                                 @include('livewire.includes.table-sort-th', [
@@ -34,22 +20,34 @@
                                     'displayName' => 'Cantidad',
                                     'sortDir' => $sortDir,
                                 ])
+                                @include('livewire.includes.table-sort-th', [
+                                    'name' => 'NoFiltro',
+                                    'displayName' => 'Nombre del Producto',
+                                    'sortDir' => $sortDir,
+                                ])
+                               
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($this->registros as $salida)
-                                <tr class="border-b dark:border-gray-700" wire:key="{{ $salida->id_registro }}">
+                            @if($salidas== [])
+                                <tr>
+                                    <td colspan="5" class="px-4 py-3 text-center text-gray-500">
+                                        Aun no se han agregado salidas a este reporte.
+                                    </td>
+                                </tr>
+                            @endif
+                            @foreach ($salidas as $salida)
+                                <tr class="border-b dark:border-gray-700" wire:key="{{ $loop->index }}">
                                     <th scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $salida->id_registro }}</th>
-                                    <td class="px-4 py-3">{{ $salida->producto->nombre_producto }}</td>
-                                    <td class="px-4 py-3">{{ $salida->fecha_registro }} </td>
-                                    <td class="px-4 py-3">{{ $salida->persona->nombre_persona }}</td>
-                                    <td class="px-4 py-3">{{ $salida->cantidad_registro }}</td>
+                                        {{ $loop->index+1 }}</th>
+                                    <td class="px-4 py-3">{{ $salida['cantidad_registro']}}</td>
+                                    <td class="px-4 py-3">{{ $salida['tipo_unidad'] }}</td>
+                                    <td class="px-4 py-3">{{ $salida['producto_nombre'] }}</td>
                                 </tr>
                             @endforeach                         
-
+                            
                         </tbody>
                     </table>
                 </div>
@@ -57,9 +55,10 @@
             </div>
         
             {{-- Div con los botones de la tabla --}}
-                <div class="py-4 px-3 flex flex-row justify-between gap-4">
+                <div class="box-border flex flex-row justify-between 
+                sm: py-4 sm:px-3  sm:gap-4 ">
                     {{-- boton de agreagar salida, btn con modal del formulario --}}
-                    <button type="button" wire:click="abrirModal"   
+                    <button type="button" wire:click="abrirModal"
                         class="bg-cortvRojoOscuro rounded-md flex items-center justify-center p-3 cursor-pointer hover:bg-cortvRojoBasico px-6 gap-2">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -68,16 +67,23 @@
                     </button>
 
                     {{-- boton de generar formato de salida  --}}
-                    <button type="button" 
+                    <button type="button" wire:click="guardarSalidas"
                         class="bg-cortvRojoBasico rounded-md flex items-center justify-center p-3 cursor-pointer hover:bg-cortvRojoOscuro px-6 gap-2">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
-                        <span class="text-base text-white whitespace-nowrap">Generar formato de salida</span>
+                        <span class="text-base text-white whitespace-nowrap">Registrar salidas y<br>generar formato de salida</span>
+                        
                     </button>
 
                 </div>
-        
+                <div wire:loading wire:target="save" class="w-full text-center text-cortvRojoOscuro mt-2">
+                    Guardando ...
+                </div>
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+                
         </div>
     </section>
 
@@ -102,11 +108,10 @@
                     
                         
                         {{-- Componente Livewire del formulario --}}
-                        <livewire:formulario.entrada-salida 
-                            :titulo_f="'Registra una Nueva Salida'" 
-                            :p_entrada_salida="'Producto que sale del inventario'" 
-                            :cantidad_entrada_salida="'Cantidad de productos que salen del inventario'"
+                        <livewire:formulario.form-salida                             
                             :enModal="true"
+                            :tipo_registro="false"
+                            :key="'form-salida-' . $formKey"
                         />
                     </div>
                 </div>

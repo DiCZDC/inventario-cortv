@@ -13,27 +13,19 @@ use App\Models\{
     };
 
 
-class EntradaSalida extends Component
+class FormSalida extends Component
 {
+
     //propiedades para el formulario, creacion de registros de entrada y salida 
     //ATRIBUTOS Con validacion
     #[Validate('required',message: 'Seleccione un producto')]
     #[Validate('exists:productos,nombre_producto', message: 'El producto seleccionado no es válido')]
     public $nombre_producto;
     
+
     #[Validate('required', message: 'Ingrese una cantidad válida')]
-    public $cantidad_registro;
-
-    public $tipo_registro = true; // 1 para entrada, 0 para salida
-   
+    public $cantidad_registro;      
     
-    //titulo de la tabla reutilizable
-    public $titulo_f = 'Registrar entrada o salida de producto';
-
-    //descripcion de los productos
-    public $p_entrada_salida = '¿Que producto nuevo o existente entra al inventario?';
-    public $cantidad_entrada_salida = '¿Cuantos productos entran al inventario?';    
-
     // Indica si el formulario está dentro de un modal
     public $enModal = false;    
 
@@ -43,18 +35,21 @@ class EntradaSalida extends Component
         $user = Auth::user();
         $producto = Producto::where('nombre_producto', $this->nombre_producto)->first();
         
-        Registro::create([
-            'persona_id' => $user->id,
-            'producto_id' => $producto->id_producto,
-            'cantidad_registro' => $this->cantidad_registro,
-            'tipo_registro' => $this->tipo_registro,
-        ]);
+        // Emitir evento con los datos validados para que Tabla los procese
+        $this->dispatch('salida-agregada', 
+            persona_id: $user->id,
+            producto_id: $producto->id_producto,
+            cantidad_registro: $this->cantidad_registro,
+            tipo_unidad: $producto->unidad_producto,
+            producto_nombre: $this->nombre_producto
+        );
+
         // Flash message de exito
-        
-        $this->reset(['nombre_producto', 'cantidad_registro']);
-        
-        return $this->redirect('/entradas');
-        
+        session()->flash('status', 'Registro de salida agregado.');
+        $this->reset(['nombre_producto', 'cantidad_registro']);    
+        if($this->enModal) {
+            $this->dispatch('salidaGuardada');
+        }    
     }
 
     #[Computed()]
@@ -66,6 +61,6 @@ class EntradaSalida extends Component
 
     public function render()
     {
-        return view('livewire.formulario.entrada-salida');
+        return view('livewire.formulario.form-salida');
     }
 }

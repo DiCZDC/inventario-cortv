@@ -6,8 +6,14 @@ use Livewire\Component;
 
 class CardTable extends Component
 {
+    
+    public $producto;
+
     public $estilos = 'shadow-2xl rounded-2xl bg-white h-[170px]';
-    public $mostrarBotonEditar = false;    
+    public $mostrarBotonEditar = false;
+        
+    public $mostrar_Nuevo_Producto=false;
+
     public $registro =[
         'id_registro' => '',
         'tipo_registro' => '',
@@ -16,6 +22,8 @@ class CardTable extends Component
         'producto_id' => '',
         
     ];
+
+
 
     //selecciona el icono segun el area
     public function selectIcon($area){
@@ -39,6 +47,9 @@ class CardTable extends Component
         }
     }
 
+    public function placeholder(){
+        return view('livewire.placeholders.dashboard.card-table');
+    }
     public function render()
     {
         return view('livewire.dashboard.card-table');

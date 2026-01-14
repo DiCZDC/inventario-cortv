@@ -5,7 +5,7 @@
     <div class="flex justify-center mt-3">
         <span class="text-cortvRojoBasico text-5xl text-center font-bold tracking-[-0.96px] mb-3"
             style="font-family: 'Times New Roman', Times, serif;">
-            {{ $titulo_f }} </span>
+            Registra una Nueva Salida </span>
     </div>
 
     {{-- FORMULARIO --}}
@@ -13,17 +13,17 @@
         <form wire:submit="save" class="flex flex-col px-7 py-4 gap-8 w-full text-black text-xl"
             style="font-family: 'Times New Roman', Times, serif;">
                                                           
-            <!-- Que producto nuevos o existente entra o sale al inventario -->
+            
             <div>
                 <label for="producto" class="flex flex-col gap-1"> <span> Producto </span>
 
                     <span class="text-semibold text-base text-cortvGrisClaro">
-                        {{$p_entrada_salida}}
+                        Producto que sale del inventario
                     </span>
 
                 </label>
 
-                <input list="productos" id="producto" name="producto" wire:model.blur="nombre_producto"
+                <input list="productos" id="producto" name="producto" wire:model="nombre_producto"
                         class="border-cortvBorde border-1 rounded-md p-2 h-[40px] w-full mt-2 text-[16px]"
                         placeholder="Escribe o selecciona un producto">
                 
@@ -46,12 +46,12 @@
                 <label for="cantidad" class="flex flex-col gap-1"> <span> Cantidad </span>
 
                     <span class="text-semibold text-base text-cortvGrisClaro">
-                        {{$cantidad_entrada_salida}}
+                        Cantidad de productos que salen del inventario
                     </span>
 
                 </label>
                 
-                <input type="number" id="cantidad" name="cantidad" wire:model.blur="cantidad_registro"
+                <input type="number" id="cantidad" name="cantidad" wire:model="cantidad_registro"
                         class="border-cortvBorde border-1 rounded-md p-2 h-[35px] w-full mt-1">
 
 
@@ -88,3 +88,4 @@
     </div>
 
 </div>
+

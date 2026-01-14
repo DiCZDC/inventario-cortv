@@ -10,14 +10,16 @@
         lg:mt-1 box-border w-full flex lg:flex-row lg:justify-around lg:gap-8 lg:p-8">
             
             {{-- COLUMNA IZQUIERDA: Formulario --}}
-            <livewire:formulario.formulario titulo_f="Registra un Nuevo Producto" />
+            <livewire:formulario.productoForm titulo_f="Registra un Nuevo Producto" />
             
             {{-- COLUMNA DERECHA: Tabla --}}
             <livewire:dashboard.table 
             titulo="Últimos productos añadidos" 
             estilos="" 
             cardEstilos="shadow-2xl rounded-2xl bg-white h-[150px]"
-            :mostrarBotonEditar="true"/>
+            :mostrarBotonEditar="true"
+            :tipo="1"
+            :mostrar_Nuevo_Producto="true"/>
 
         </div>
     </section>

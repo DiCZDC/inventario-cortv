@@ -12,7 +12,7 @@
         md:text-3xl           
         lg:text-4xl
         " style="font-family: 'Times New Roman'">
-                <span>{{ $titulo }}</span>
+                <span>{{$this->titulo()}}</span>
         </div>
         
         {{-- Ahora si, las filas de la tabla  --}}
@@ -24,7 +24,9 @@
         lg:w-full lg:p-5">
             {{-- cards de la tabla, se mandan llamar desde el componente livewire solo se llaman 3, puede ampliarse --}}
             @forelse($this->Registros as $registro)
-                @livewire('dashboard.card-table', ['estilos' => $cardEstilos, 'mostrarBotonEditar' => $mostrarBotonEditar, 'registro' => $registro], key($registro->id_registro))
+                <livewire:dashboard.card-table lazy :estilos="$cardEstilos" :mostrar-boton-editar="$mostrarBotonEditar" :registro="$registro" :key="$registro->id_registro"
+                 :producto="$this->Productos[$loop->index]" :mostrar_Nuevo_Producto="$mostrar_Nuevo_Producto" />
+                                 {{-- @livewire('dashboard.card-table', ['estilos' => $cardEstilos, 'mostrarBotonEditar' => $mostrarBotonEditar, 'registro' => $registro], key($registro->id_registro)) --}}
             @empty
                 <div class="text-center text-gray-500 py-4">
                     No hay registros disponibles

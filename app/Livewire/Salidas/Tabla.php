@@ -4,10 +4,12 @@ namespace App\Livewire\Salidas;
 
 use Livewire\Component;
 use App\Models\Registro;
-use Livewire\WithPagination;    
+use Livewire\WithPagination;   
+use App\Http\Controllers\pdfController; 
 use Livewire\Attributes\{
     Url,
-    Computed
+    Computed,
+    On
 };
 
 class Tabla extends Component
@@ -18,8 +20,11 @@ class Tabla extends Component
     public $showModal = false;
     public $search = '';
     public $sortBy = 'id_registro'; 
-    public $sortDir = 'ASC';    
-    public $perPage = 10;
+    public $sortDir = 'ASC';
+    public $formKey = 0; 
+
+    public $salidas = [];
+    public $datos_registro = [];
 
     public function setSortBy($sortBy){
         if($sortBy === 'NoFiltro') {
@@ -42,15 +47,92 @@ class Tabla extends Component
     {
         $this->showModal = false;
     }
-    
-    #[Computed()]
-    public function registros(){
-        return Registro::search($this->search)
-            ->where('tipo_registro', false)
-            ->orderBy($this->sortBy, $this->sortDir)
-            ->paginate($this->perPage);
+    //Guardar datos de salida en la base de datos
+    public function guardarSalidas()
+    {   
+        //Contar la cantidad de registros a pasar al PDF
+        $cantidad_registro = count($this->salidas);
+
+
+        //Comprobar que haya salidas para guardar
+        if($cantidad_registro > 0 and (session()->has('datos_registro') && !empty(session('datos_registro')))){
+            foreach ($this->salidas as $salida) {
+                Registro::create([
+                    'persona_id' => $salida['persona_id'],
+                    'producto_id' => $salida['producto_id'],
+                    'cantidad_registro' => $salida['cantidad_registro'],
+                    'tipo_registro' => false,
+                ]);
+            }
+
+            // Limpiar el array de salidas después de guardar
+            $this->salidas = [];
+            
+            // Cerrar el modal
+            $this->cerrarModal();
+                        
+            // Flash message de exito
+            session()->flash('status', 'Salidas guardadas exitosamente.');
+            
+            return redirect()->route('generate.formato.salida',[
+                'cantidad_registro' => $cantidad_registro,
+            ]);
+        }
+        else{
+            if($cantidad_registro == 0){
+                session()->flash('status', 'No hay salidas para guardar.');
+            // Flash message de error si no hay salidas para guardar
+            }else{
+                session()->flash('status', 'Faltan datos del formato de salida.');
+            }
+        }
+  }
+
+    public function resetearFormulario()
+    {
+        $this->formKey++; // Incrementar para forzar recreación del componente
+
+        // Limpiar el array de salidas después de guardar
+        $this->salidas = [];
+
+        // Cerrar el modal
+        $this->cerrarModal();
+
+        // Flash message de exito
+        session()->flash('status', 'Salidas guardadas exitosamente.');
     }
 
+    protected $listeners = ['salidaGuardada' => 'cerrarModal'];
+
+    //Cuando ocurra el evento "salida-agregada", se ejecuta este metodo
+    #[On('salida-agregada')]
+    public function agregarSalida($persona_id, $producto_id, $cantidad_registro, $tipo_unidad, $producto_nombre)
+    {
+        // Agregar los datos al array de salidas para procesarlos después
+        $this->salidas[] = [
+            'persona_id' => $persona_id,
+            'producto_id' => $producto_id,
+            'cantidad_registro' => $cantidad_registro,
+            'tipo_unidad' => $tipo_unidad,
+            'producto_nombre' => $producto_nombre,
+        ];
+    }
+    #[On('formato-salida-guardado')]
+    public function manejarFormatoSalidaGuardado($area, $nombre, $categoria, $autoriza, $entrega)
+    {
+        // Aquí puedes manejar los datos recibidos del evento formato-salida-guardado
+        // Por ejemplo, podrías almacenarlos en la base de datos o realizar alguna otra acción
+        $this->datos_registro = [
+            'area' => $area,
+            'nombre' => $nombre,
+            'categoria' => $categoria,
+            'autoriza' => $autoriza,
+            'entrega' => $entrega,
+            'fecha' => date('d \d\e F \d\e Y'),
+        ];
+    }
+
+    
     public function render()
     {
         return view('livewire.salidas.tabla');

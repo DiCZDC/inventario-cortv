@@ -29,7 +29,8 @@ Route::get('/pdfs', function () {
     return view('pdfs.report');
 })->name('pdfs.report');
 
-Route::get('/generate-report/{fechaInicio}/{fechaFin}/', [pdfController::class, 'generateReport'])->name('generate.pdf');
+Route::get('/generate-report/{fechaInicio}/{fechaFin}/{areaFilter}', [pdfController::class, 'generateReport'])->name('generate.pdf');
+Route::get('/generate-formato-salida/{cantidad_registro}', [pdfController::class, 'generateFormatoSalida'])->name('generate.formato.salida');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

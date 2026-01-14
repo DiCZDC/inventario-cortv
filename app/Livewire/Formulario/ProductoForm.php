@@ -3,10 +3,15 @@
 namespace App\Livewire\Formulario;
 
 use Livewire\Component;
-use App\Models\Producto;
+use App\Models\{
+    Producto,
+    Area,
+    Clave
+};
 use Livewire\Attributes\Validate;
+use Livewire\Attributes\Computed;
 
-class Formulario extends Component
+class ProductoForm extends Component
 {
 
     //adaptabilidad del formulario
@@ -27,7 +32,7 @@ class Formulario extends Component
     public $unidad_producto = '';
     
     #[Validate('required', message:'Seleccione un área para el producto')]
-    public $area_producto = '';
+    public $id_area = 1; // Área por defecto
     
     public function save()
     {
@@ -37,16 +42,48 @@ class Formulario extends Component
             'unidad_producto' => 'required|string|max:60',            
         ]);
 
-        Producto::create(
-            $this->only(['nombre_producto', 'descripcion_producto', 'unidad_producto', 'area_producto'])
+        $producto = Producto::create(
+            $this->only(['nombre_producto', 'descripcion_producto', 'unidad_producto'])
         );
- 
+        
+        
+        $id_producto = $producto->id_producto;
+        $ultima_clave = Clave::where('id_area', $this->id_area)->orderBy('id_clave', 'desc')->first();
+        $contador_clave = ($ultima_clave?->contador_clave ?? 0) + 1;
+        
+        $nombre_area = Area::find($this->id_area)->nombre_area;
+        $valor_clave = 'CTV-'.$nombre_area.'-'.str_pad($contador_clave, 3, '0', STR_PAD_LEFT);
+
+        Clave::create([
+            'id_area' => $this->id_area,
+            'id_producto' => $id_producto,
+            'contador_clave' => $contador_clave,
+            'valor_clave' => $valor_clave,
+        ]);
+    
         session()->flash('status', 'Producto creado exitosamente.');
-        //$this->reset(['nombre_producto', 'descripcion_producto', 'unidad_producto', 'area_producto']);       
+        
+        $this->reset(['nombre_producto', 'descripcion_producto', 'unidad_producto', 'id_area']); 
+        return $this->redirect('/nuevo-producto');      
+    }
+
+    #[Computed(cache: true)]
+    public function areas()
+    {
+        return Area::all();
     }
 
     public function render()
     {
-        return view('livewire.formulario.formulario');
+        return view('livewire.formulario.productoForm');
     }
 }
+
+
+/*
+use App\Models\{
+    Producto,
+    Area,
+    Clave
+};
+*/
