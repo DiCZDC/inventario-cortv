@@ -24,6 +24,9 @@ class FormSalida extends Component
     
 
     #[Validate('required', message: 'Ingrese una cantidad válida')]
+    #[Validate('integer', message: 'La cantidad debe ser un número entero')]
+    #[Validate('min:1', message: 'La cantidad debe ser al menos 1')]
+    
     public $cantidad_registro;      
     
     // Indica si el formulario está dentro de un modal
