@@ -249,7 +249,7 @@
                         </td>
                         <td>
                             <div class="firma-espacio"></div>
-                            <p class="nombre-firmante">ARQ. MARIANA ZARATE MORLAN</p>
+                            <p class="nombre-firmante">{{ session('datos_registro.autoriza') }}</p>
                             <p class="cargo-firmante">DEPARTAMENTO DE RECURSOS MATERIALES Y SERVICIOS GENERALES</p>
                         </td>
                     </tr>
@@ -269,7 +269,7 @@
                     <tr>
                         <td>
                             <div class="firma-espacio"></div>
-                            <p class="nombre-firmante">ING. ALINA VENTURA HERNANDEZ</p>
+                            <p class="nombre-firmante">{{ session('datos_registro.entrega') }}</p>
                             <p class="cargo-firmante">AUXILIAR DEL DEPARTAMENTO DE RECURSOS MATERIALES Y SERVICIOS GENERALES</p>
                         </td>
                         <td>
