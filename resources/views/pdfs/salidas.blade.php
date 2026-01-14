@@ -19,24 +19,28 @@
         }
 
         .header {
-            width: 100%;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 20px;
         }
 
         /* Logos layout using table for PDF safety */
         .tabla-logos {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .tabla-logos td {
-            width: 50%;
-            text-align: center;
-            vertical-align: middle;
-        }
-        .tabla-logos img {
-            max-height: 80px; 
-            width: auto;
+            
+            margin-top: 10px;
+    height: 150px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 10px;
+    img{
+        width: 420px;
+        height: auto;
+    }
+            
         }
 
         .corporacion {
@@ -153,18 +157,19 @@
     <main>
 
         <div class="header">
-            <table class="tabla-logos">
-                <tr>
-                    <td>
-                        @php $logo1 = public_path('images/logo_oaxaca.png'); @endphp
+            <div class="tabla-logos">
+                <div>
+                    @php $logo1 = public_path('images/logo_oaxaca.png'); @endphp
                         @inlinedImage($logo1)
-                    </td>
-                    <td>
+                    
+                </div>   
+
+                <div>
                         @php $logo2 = public_path('images/logo_cortv.png'); @endphp
                         @inlinedImage($logo2)
-                    </td>
-                </tr>
-            </table>
+                </div>   
+                
+            </div>
 
             <div class="corporacion">
                 <h1>CORPORACION OAXAQUEÑA DE RADIO Y TELEVISION</h1>
