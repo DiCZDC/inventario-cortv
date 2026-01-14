@@ -36,22 +36,22 @@
             <div class="informacion-s">
                 <div>
                     <span> <b>Area que solicita:</b> </span>
-                    <span>{{$datos['area'] }}</span>
+                    <span>{{ session('datos_registro.area') }}</span>
                 </div>
                 
                 <div>
                     <span><b>Nombre:</b></span>
-                    <span>{{$datos['nombre'] }}</span>
+                    <span>{{ session('datos_registro.nombre') }}</span>
                 </div>
 
                 <div>
                     <span><b>Fecha:</b></span>
-                    <span>{{$datos['fecha'] }}</span>
+                    <span>{{ date('d/m/Y') }}</span>
                 </div>
 
                 <div>
                     <span><b>Categoria:</b></span>
-                    <span>{{$datos['categoria'] }}</span>
+                    <span>{{ session('datos_registro.categoria') }}</span>
                 </div>
 
             </div>

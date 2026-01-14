@@ -37,6 +37,13 @@ class FormatoSalidas extends Component
             'entrega' => 'required|string|max:255',
         ]);
 
+        session()->put('datos_registro', [
+            'area' => $this->area,
+            'nombre' => $this->nombre,
+            'categoria' => $this->categoria,
+            'autoriza' => $this->autoriza,
+            'entrega' => $this->entrega,
+        ]);
         $this->dispatch('formato-salida-guardado', 
             area: $this->area,
             nombre: $this->nombre,

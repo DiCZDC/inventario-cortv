@@ -55,7 +55,7 @@ class Tabla extends Component
 
 
         //Comprobar que haya salidas para guardar
-        if($cantidad_registro > 0 and $datos_registro !==[]){ 
+        if($cantidad_registro > 0 and (session()->has('datos_registro') && !empty(session('datos_registro')))){
             foreach ($this->salidas as $salida) {
                 Registro::create([
                     'persona_id' => $salida['persona_id'],
@@ -70,13 +70,12 @@ class Tabla extends Component
             
             // Cerrar el modal
             $this->cerrarModal();
-            
+                        
             // Flash message de exito
             session()->flash('status', 'Salidas guardadas exitosamente.');
-            // Redirigir a la ruta que genera el PDF
+            
             return redirect()->route('generate.formato.salida',[
                 'cantidad_registro' => $cantidad_registro,
-                'datos_registro' => $this->datos_registro,
             ]);
         }
         else{
