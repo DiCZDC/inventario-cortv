@@ -7,7 +7,8 @@ use App\Models\Registro;
 use Livewire\WithPagination;    
 use Livewire\Attributes\{
     Url,
-    Computed
+    Computed,
+    On
 };
 
 class Tabla extends Component
@@ -21,7 +22,7 @@ class Tabla extends Component
     public $sortDir = 'ASC';
     public $formKey = 0; 
 
-    public $cant_registros = 0;
+    public $salidas = [];
 
     public function setSortBy($sortBy){
         if($sortBy === 'NoFiltro') {
@@ -44,6 +45,27 @@ class Tabla extends Component
     {
         $this->showModal = false;
     }
+    //Guardar datos de salida en la base de datos
+    public function guardarSalidas()
+    {
+        foreach ($this->salidas as $salida) {
+            Registro::create([
+                'persona_id' => $salida['persona_id'],
+                'producto_id' => $salida['producto_id'],
+                'cantidad_registro' => $salida['cantidad_registro'],
+                'tipo_registro' => false,
+            ]);
+        }
+
+        // Limpiar el array de salidas después de guardar
+        $this->salidas = [];
+
+        // Cerrar el modal
+        $this->cerrarModal();
+
+        // Flash message de exito
+        session()->flash('status', 'Salidas guardadas exitosamente.');
+  }
 
     public function resetearFormulario()
     {
@@ -51,12 +73,23 @@ class Tabla extends Component
     }
 
     protected $listeners = ['salidaGuardada' => 'resetearFormulario'];
-    #[Computed()]
-    public function Salidas(){
-        return Registro::where('tipo_registro', false)->orderBy('id_registro', 'DESC')->take($this->cant_registros)->get(); 
-    }
-   
 
+    //Cuando ocurra el evento "salida-agregada", se ejecuta este metodo
+    #[On('salida-agregada')]
+    public function agregarSalida($persona_id, $producto_id, $cantidad_registro, $tipo_unidad, $producto_nombre)
+    {
+        // Agregar los datos al array de salidas para procesarlos después
+        $this->salidas[] = [
+            'persona_id' => $persona_id,
+            'producto_id' => $producto_id,
+            'cantidad_registro' => $cantidad_registro,
+            'tipo_unidad' => $tipo_unidad,
+            'producto_nombre' => $producto_nombre,
+        ];
+    }
+
+
+    
     public function render()
     {
         return view('livewire.salidas.tabla');

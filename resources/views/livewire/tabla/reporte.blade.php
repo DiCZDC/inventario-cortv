@@ -103,7 +103,7 @@
                                 @foreach ($this->datosReporte as $producto)
                                     <tr class="border-b dark:border-gray-700">
                                         <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center w-auto">{{ $loop->iteration }}</th>
-                                        <td class="px-4 py-3 text-center">{{ $producto['datos_producto']->clave->valor_clave }}</td>
+                                        <td class="px-4 py-3 text-center">{{ $producto['datos_producto']->clave ? $producto['datos_producto']->clave->valor_clave : 'N/A' }}</td>
                                         <td class="px-4 py-3 break-word max-w-2">{{ $producto['datos_producto']->nombre_producto }}</td>
                                         <td class="px-4 py-3 text-center">{{$producto['exInicial']}}</td>
                                         <td class="px-4 py-3 text-center {{ $producto['totalEntrada'] > 0 ? 'text-green-500':'text-gray-500'}}">{{ $producto['totalEntrada'] }} </td>
